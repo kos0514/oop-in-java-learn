@@ -6,7 +6,6 @@ import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 
 import org.springframework.stereotype.Component;
-import java.util.UUID;
 
 /**
  * ビルダーパターンを利用した転生者ファクトリー
@@ -72,8 +71,7 @@ public class TransmigratorFactory {
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            var soulId = new SoulId(UUID.randomUUID());
-            return new Transmigrator(soulId, soulName, age);
+            return new Transmigrator(SoulId.newId(), soulName, age);
         }
     }
 }

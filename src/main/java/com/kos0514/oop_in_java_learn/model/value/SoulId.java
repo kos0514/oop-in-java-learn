@@ -1,5 +1,7 @@
 package com.kos0514.oop_in_java_learn.model.value;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.util.UUID;
@@ -14,9 +16,19 @@ import java.util.UUID;
  * </p>
  */
 @Value
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SoulId {
     /**
      * 魂ID
      */
     UUID id;
+
+    /**
+     * 新しいランダムなSoulIdを生成するファクトリーメソッド
+     *
+     * @return 新しい魂ID
+     */
+    public static SoulId newId() {
+        return new SoulId(UUID.randomUUID());
+    }
 }

@@ -1,5 +1,7 @@
 package com.kos0514.oop_in_java_learn.model.value;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 /**
@@ -12,6 +14,7 @@ import lombok.Value;
  * </p>
  */
 @Value
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SoulName {
     /**
      * 名
