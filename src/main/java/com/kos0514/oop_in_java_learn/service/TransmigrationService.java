@@ -1,5 +1,8 @@
 package com.kos0514.oop_in_java_learn.service;
 
+import com.kos0514.oop_in_java_learn.model.value.Age;
+import com.kos0514.oop_in_java_learn.model.value.SoulName;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
@@ -18,11 +21,12 @@ import java.util.Scanner;
  * @author kos0514
  * @version 1.0
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransmigrationService {
 
-    private final TransmigratorFactory transmigratorFactory;
+    TransmigratorFactory transmigratorFactory;
 
     /**
      * 転生プロセスを開始します。
@@ -30,7 +34,7 @@ public class TransmigrationService {
      * 獲得するスキルなどを設定し、転生処理を完了します。
      */
     public void startTransmigrationProcess() {
-        System.out.println("転生プロセスを開始します...");
+        log.info("転生プロセスを開始します...");
 
         try (Scanner scanner = new Scanner(System.in)) {
             // 転生者の基本情報を入力
@@ -43,8 +47,8 @@ public class TransmigrationService {
             // 転生の実行
             executeTransmigration(transmigrator);
 
-            System.out.println("転生が完了しました！");
-            System.out.println("名前: " + transmigrator.getSoulName());
+            log.info("転生が完了しました！");
+            log.info("名前: " + transmigrator.getSoulName());
         }
     }
 
@@ -55,16 +59,35 @@ public class TransmigrationService {
      * @return 作成された転生者オブジェクト
      */
     private Transmigrator collectTransmigratorInfo(Scanner scanner) {
-        System.out.println("転生者の名前（名）を入力してください:");
-        String firstName = scanner.nextLine();
+        // 名前の入力と検証
+        SoulName soulName = null;
+        while (soulName == null) {
+            try {
+                log.info("転生者の名前（名）を入力してください:");
+                var firstName = scanner.nextLine();
 
-        System.out.println("転生者の名前（姓）を入力してください:");
-        String lastName = scanner.nextLine();
+                log.info("転生者の名前（姓）を入力してください:");
+                var lastName = scanner.nextLine();
 
-        System.out.println("転生者の年齢を入力してください:");
-        int age = Integer.parseInt(scanner.nextLine());
+                soulName = SoulName.of(firstName, lastName);
+            } catch (IllegalArgumentException e) {
+                log.warn(e.getMessage());
+            }
+        }
 
-        return transmigratorFactory.createTransmigrator(firstName, lastName, age);
+        // 年齢の入力と検証
+        Age age = null;
+        while (age == null) {
+            try {
+                log.info("転生者の年齢を入力してください (1～120の整数):");
+                String ageInput = scanner.nextLine();
+                age = Age.from(ageInput);
+            } catch (IllegalArgumentException e) {
+                log.warn(e.getMessage());
+            }
+        }
+
+        return transmigratorFactory.createTransmigrator(soulName, age);
     }
 
     /**
@@ -73,7 +96,7 @@ public class TransmigrationService {
      * @param transmigrator 転生者オブジェクト
      */
     private void executeTransmigration(Transmigrator transmigrator) {
-        System.out.println(transmigrator.getSoulName() + "さんの転生を実行しています...");
+        log.info(transmigrator.getSoulName() + "さんの転生を実行しています...");
 
         // ここに転生処理の実装を追加
     }

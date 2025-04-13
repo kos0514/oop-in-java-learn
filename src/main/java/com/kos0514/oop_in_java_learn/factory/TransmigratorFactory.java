@@ -15,58 +15,65 @@ import java.util.UUID;
 public class TransmigratorFactory {
 
     /**
-     * 新しい転生者ビルダーを作成します。
-     *
-     * @return TransmigratorBuilder インスタンス
-     */
-    public TransmigratorBuilder builder() {
-        return new TransmigratorBuilder();
-    }
-
-    /**
      * 転生者を生成します。
-     * @param firstName 名
-     * @param lastName  姓
-     * @param age 年齢
+     *
+     * @param soulName 転生者の名前を表す値オブジェクト
+     * @param age 転生者の年齢を表す値オブジェクト
      * @return Transmigrator インスタンス
      */
-    public Transmigrator createTransmigrator(String firstName, String lastName, int age) {
+    public Transmigrator createTransmigrator(SoulName soulName, Age age) {
         return builder()
-                .withFirstName(firstName)
-                .withLastName(lastName)
+                .withSoulName(soulName)
                 .withAge(age)
                 .build();
     }
 
     /**
+     * 新しい転生者ビルダーを作成します。
+     *
+     * @return TransmigratorBuilder インスタンス
+     */
+    private TransmigratorBuilder builder() {
+        return new TransmigratorBuilder();
+    }
+
+    /**
      * 転生者オブジェクトを構築するためのビルダークラス
      */
-    public static class TransmigratorBuilder {
-        private String firstName;
-        private String lastName;
-        private int age;
+    private static class TransmigratorBuilder {
+        private SoulName soulName;
+        private Age age;
 
-        public TransmigratorBuilder withFirstName(String firstName) {
-            this.firstName = firstName;
+        /**
+         * 転生者の名前を設定します。
+         *
+         * @param soulName 転生者の名前を表す値オブジェクト
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withSoulName(SoulName soulName) {
+            this.soulName = soulName;
             return this;
         }
 
-        public TransmigratorBuilder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public TransmigratorBuilder withAge(int age) {
+        /**
+         * 転生者の年齢を設定します。
+         *
+         * @param age 転生者の年齢を表す値オブジェクト
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withAge(Age age) {
             this.age = age;
             return this;
         }
 
+        /**
+         * ビルダーの設定値から転生者オブジェクトを構築します。
+         *
+         * @return 構築された転生者オブジェクト
+         */
         public Transmigrator build() {
             var soulId = new SoulId(UUID.randomUUID());
-            var soulName = new SoulName(firstName, lastName);
-            var ageValue = new Age(age);
-
-            return new Transmigrator(soulId, soulName, ageValue);
+            return new Transmigrator(soulId, soulName, age);
         }
     }
 }
