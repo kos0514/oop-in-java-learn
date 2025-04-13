@@ -37,7 +37,7 @@ public class Age {
      * @return 妥当性が確認された年齢の値オブジェクト
      * @throws IllegalArgumentException 数値に変換できない、または妥当な範囲外の値が指定された場合
      */
-    public static Age from(String ageInput) throws IllegalArgumentException {
+    public static Age fromString(String ageInput) throws IllegalArgumentException {
         if (ageInput == null || ageInput.trim().isEmpty()) {
             throw new IllegalArgumentException("年齢を入力してください");
         }

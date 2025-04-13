@@ -54,5 +54,6 @@ public class OopInJavaLearnApplication implements CommandLineRunner {
 		log.info("========================================");
 
 		transmigrationService.startTransmigrationProcess();
+		System.exit(0);
 	}
 }

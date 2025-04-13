@@ -26,7 +26,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class TransmigrationService {
 
-    TransmigratorFactory transmigratorFactory;
+    private final TransmigratorFactory transmigratorFactory;
 
     /**
      * 転生プロセスを開始します。
@@ -38,28 +38,27 @@ public class TransmigrationService {
 
         try (Scanner scanner = new Scanner(System.in)) {
             // 転生者の基本情報を入力
-            var transmigrator = collectTransmigratorInfo(scanner);
+            var soulName = collectSoulName(scanner);
+            var age = collectAge(scanner);
 
-            // 転生先の世界を選択
-
-            // スキルを選択
+            // ファクトリーメソッドで転生者を作成
+            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age);
 
             // 転生の実行
             executeTransmigration(transmigrator);
 
             log.info("転生が完了しました！");
-            log.info("名前: " + transmigrator.getSoulName());
+            log.info("名前: {}", transmigrator.getSoulName().getFullName());
         }
     }
 
     /**
-     * 転生者の基本情報を収集します。
+     * 転生者の名前を収集します。
      *
-     * @param scanner ユーザー入力を読み取るスキャナー
-     * @return 作成された転生者オブジェクト
+     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @return 名前の値オブジェクト
      */
-    private Transmigrator collectTransmigratorInfo(Scanner scanner) {
-        // 名前の入力と検証
+    private SoulName collectSoulName(Scanner scanner) {
         SoulName soulName = null;
         while (soulName == null) {
             try {
@@ -74,20 +73,26 @@ public class TransmigrationService {
                 log.warn(e.getMessage());
             }
         }
+        return soulName;
+    }
 
-        // 年齢の入力と検証
+    /**
+     * 転生者の年齢を収集します。
+     *
+     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @return 年齢の値オブジェクト
+     */
+    private Age collectAge(Scanner scanner) {
         Age age = null;
         while (age == null) {
             try {
                 log.info("転生者の年齢を入力してください (1～120の整数):");
-                String ageInput = scanner.nextLine();
-                age = Age.from(ageInput);
+                age = Age.fromString(scanner.nextLine());
             } catch (IllegalArgumentException e) {
                 log.warn(e.getMessage());
             }
         }
-
-        return transmigratorFactory.createTransmigrator(soulName, age);
+        return age;
     }
 
     /**
@@ -96,8 +101,7 @@ public class TransmigrationService {
      * @param transmigrator 転生者オブジェクト
      */
     private void executeTransmigration(Transmigrator transmigrator) {
-        log.info(transmigrator.getSoulName() + "さんの転生を実行しています...");
-
-        // ここに転生処理の実装を追加
+        log.info(transmigrator.getSoulName().getFullName() + "さんの転生を実行しています...");
+        log.info("転生完了: " + transmigrator.getSoulName().getFullName() + "さんは転生しました！");
     }
 }
