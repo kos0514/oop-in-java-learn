@@ -1,4 +1,4 @@
-package com.kos0514.oop_in_java_learn.domain.value.transmigrator;
+package com.kos0514.oop_in_java_learn.model.value;
 
 import lombok.Value;
 

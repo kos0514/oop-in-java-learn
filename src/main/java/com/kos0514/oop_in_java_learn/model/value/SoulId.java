@@ -1,20 +1,22 @@
-package com.kos0514.oop_in_java_learn.domain.value.transmigrator;
+package com.kos0514.oop_in_java_learn.model.value;
 
 import lombok.Value;
 
+import java.util.UUID;
+
 /**
- * 転生者の年齢を表す値オブジェクト。
+ * 転生者の魂IDを表す値オブジェクト。
  * <p>
- * この不変クラスは転生者の年齢（歳数）を整数値として保持します。
+ * この不変クラスは転生者の魂IDをUUIDとして保持します。
  * Lombokの{@code @Value}アノテーションを使用しているため、
  * 全フィールドは暗黙的にprivate finalとなり、
  * getter、equals、hashCode、toStringメソッドが自動生成されます。
  * </p>
  */
 @Value
-public class Age {
+public class SoulId {
     /**
-     * 年齢（歳）
+     * 魂ID
      */
-    int years;
+    UUID id;
 }

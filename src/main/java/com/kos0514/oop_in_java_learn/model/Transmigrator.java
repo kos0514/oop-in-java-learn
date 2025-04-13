@@ -1,8 +1,8 @@
-package com.kos0514.oop_in_java_learn.domain.model.transmigrator;
+package com.kos0514.oop_in_java_learn.model;
 
-    import com.kos0514.oop_in_java_learn.domain.value.transmigrator.Age;
-    import com.kos0514.oop_in_java_learn.domain.value.transmigrator.SoulId;
-    import com.kos0514.oop_in_java_learn.domain.value.transmigrator.SoulName;
+    import com.kos0514.oop_in_java_learn.model.value.Age;
+    import com.kos0514.oop_in_java_learn.model.value.SoulId;
+    import com.kos0514.oop_in_java_learn.model.value.SoulName;
     import lombok.Value;
 
     /**
@@ -15,7 +15,7 @@ package com.kos0514.oop_in_java_learn.domain.model.transmigrator;
      * </p>
      */
     @Value
-    public class TransmigratorEntity {
+    public class Transmigrator {
         /**
          * 魂ID
          */
