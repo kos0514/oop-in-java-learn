@@ -1,13 +1,16 @@
 package com.kos0514.oop_in_java_learn.service;
 
+import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
+import com.kos0514.oop_in_java_learn.repository.WorldRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
 
 import lombok.RequiredArgsConstructor;
+
 import java.util.Scanner;
 
 /**
@@ -28,6 +31,8 @@ public class TransmigrationService {
 
     private final TransmigratorFactory transmigratorFactory;
 
+    private final WorldRepository worldRepository;
+
     /**
      * 転生プロセスを開始します。
      * ユーザーからの入力を受け付け、転生者の情報、転生先の世界、
@@ -35,20 +40,27 @@ public class TransmigrationService {
      */
     public void startTransmigrationProcess() {
         log.info("転生プロセスを開始します...");
+        printSeparator();
+        log.info("    異世界転生トランスミッションサービス");
+        printSeparator();
 
         try (Scanner scanner = new Scanner(System.in)) {
             // 転生者の基本情報を入力
             var soulName = collectSoulName(scanner);
             var age = collectAge(scanner);
 
+            // 世界選択
+            var selectedWorld = selectWorld(scanner);
+
             // ファクトリーメソッドで転生者を作成
-            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age);
+            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age, selectedWorld);
 
             // 転生の実行
             executeTransmigration(transmigrator);
 
             log.info("転生が完了しました！");
             log.info("名前: {}", transmigrator.getSoulName().getFullName());
+            log.info("転生先: {}", transmigrator.getWorld().getName());
         }
     }
 
@@ -96,12 +108,68 @@ public class TransmigrationService {
     }
 
     /**
+     * 転生先の世界を選択します。
+     *
+     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @return 選択された世界
+     */
+    private World selectWorld(Scanner scanner) {
+        var availableWorlds = worldRepository.getAvailableWorlds();
+
+        log.info("【転生先世界の選択】");
+
+        // 利用可能な世界の一覧を表示
+        for (int i = 0; i < availableWorlds.size(); i++) {
+            World world = availableWorlds.get(i);
+            log.info("{}. {}", i + 1, world.getName());
+            log.info("   {}", world.getDescription());
+            log.info("");
+        }
+
+        World selectedWorld = null;
+        while (selectedWorld == null) {
+            try {
+                log.info("番号を入力してください (1-{}):", availableWorlds.size());
+                var selection = Integer.parseInt(scanner.nextLine());
+
+                if (selection >= 1 && selection <= availableWorlds.size()) {
+                    selectedWorld = availableWorlds.get(selection - 1);
+                    log.info("");
+                    printSeparator();
+                    log.info("{}に転生が決定しました！", selectedWorld.getName());
+                    log.info("【世界の説明】");
+                    log.info("{}", selectedWorld.getDescription());
+                    printSeparator();
+                    log.info("");
+                } else {
+                    log.warn("有効な番号を入力してください (1-{})。", availableWorlds.size());
+                }
+            } catch (NumberFormatException e) {
+                log.warn("数値を入力してください。");
+            }
+        }
+
+        return selectedWorld;
+    }
+
+    /**
      * 転生処理を実行します。
      *
      * @param transmigrator 転生者オブジェクト
      */
     private void executeTransmigration(Transmigrator transmigrator) {
-        log.info(transmigrator.getSoulName().getFullName() + "さんの転生を実行しています...");
-        log.info("転生完了: " + transmigrator.getSoulName().getFullName() + "さんは転生しました！");
+        var fullName = transmigrator.getSoulName().getFullName();
+        var worldName = transmigrator.getWorld().getName();
+
+        log.info("{}さんの転生を実行しています...", fullName);
+        log.info("転生完了: {}さんは、{}に転生しました！", fullName, worldName);
     }
+
+    /**
+     * 転生プロセスのセパレーターを表示します。
+     */
+    private void printSeparator() {
+        log.info("======================================");
+    }
+
 }

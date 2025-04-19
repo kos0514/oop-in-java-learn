@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn.factory;
 
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
+import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
@@ -18,12 +19,14 @@ public class TransmigratorFactory {
      *
      * @param soulName 転生者の名前を表す値オブジェクト
      * @param age 転生者の年齢を表す値オブジェクト
+     * @param world 転生先の世界
      * @return Transmigrator インスタンス
      */
-    public Transmigrator createTransmigrator(SoulName soulName, Age age) {
+    public Transmigrator createTransmigrator(SoulName soulName, Age age, World world) {
         return builder()
                 .withSoulName(soulName)
                 .withAge(age)
+                .withWorld(world)
                 .build();
     }
 
@@ -42,6 +45,7 @@ public class TransmigratorFactory {
     private static class TransmigratorBuilder {
         private SoulName soulName;
         private Age age;
+        private World world;
 
         /**
          * 転生者の名前を設定します。
@@ -66,12 +70,23 @@ public class TransmigratorFactory {
         }
 
         /**
+         * 転生先の世界を設定します。
+         *
+         * @param world 転生先の世界
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withWorld(World world) {
+            this.world = world;
+            return this;
+        }
+
+        /**
          * ビルダーの設定値から転生者オブジェクトを構築します。
          *
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            return new Transmigrator(SoulId.newId(), soulName, age);
+            return new Transmigrator(SoulId.newId(), soulName, age, world);
         }
     }
 }
