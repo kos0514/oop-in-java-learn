@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn.model;
 
 import com.kos0514.oop_in_java_learn.model.value.Age;
+import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.world.World;
@@ -9,7 +10,7 @@ import lombok.Value;
 /**
  * 転生者エンティティを表すクラス。
  * <p>
- * この不変クラスは転生者の魂ID、名前、および年齢を保持します。
+ * この不変クラスは転生者の魂ID、名前、年齢、基礎パラメータを保持します。
  * Lombokの{@code @Value}アノテーションを使用しているため、
  * 全フィールドは暗黙的にprivate finalとなり、
  * getter、equals、hashCode、toStringメソッドが自動生成されます。
@@ -36,4 +37,9 @@ public class Transmigrator {
      * 転生先の世界
      */
     World world;
+
+    /**
+     * 基礎パラメータ
+     */
+    BaseParameters parameters;
 }

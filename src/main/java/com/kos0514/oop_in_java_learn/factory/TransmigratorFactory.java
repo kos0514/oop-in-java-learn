@@ -2,6 +2,7 @@ package com.kos0514.oop_in_java_learn.factory;
 
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
+import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
@@ -23,10 +24,15 @@ public class TransmigratorFactory {
      * @return Transmigrator インスタンス
      */
     public Transmigrator createTransmigrator(SoulName soulName, Age age, World world) {
+        // 魂IDを先に生成して、基礎パラメータ生成に使用する
+        var soulId = SoulId.newId();
+
         return builder()
+                .withSoulId(soulId)
                 .withSoulName(soulName)
                 .withAge(age)
                 .withWorld(world)
+                .withBaseParameters(BaseParameters.generateFrom(age, soulId))
                 .build();
     }
 
@@ -43,9 +49,22 @@ public class TransmigratorFactory {
      * 転生者オブジェクトを構築するためのビルダークラス
      */
     private static class TransmigratorBuilder {
+        private SoulId soulId;
         private SoulName soulName;
         private Age age;
         private World world;
+        private BaseParameters parameters;
+
+        /**
+         * 転生者の魂IDを設定します。
+         *
+         * @param soulId 転生者の魂IDを表す値オブジェクト
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withSoulId(SoulId soulId) {
+            this.soulId = soulId;
+            return this;
+        }
 
         /**
          * 転生者の名前を設定します。
@@ -81,12 +100,23 @@ public class TransmigratorFactory {
         }
 
         /**
+         * 基礎パラメータを設定します。
+         *
+         * @param parameters 基礎パラメータを表す値オブジェクト
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withBaseParameters(BaseParameters parameters) {
+            this.parameters = parameters;
+            return this;
+        }
+
+        /**
          * ビルダーの設定値から転生者オブジェクトを構築します。
          *
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            return new Transmigrator(SoulId.newId(), soulName, age, world);
+            return new Transmigrator(soulId, soulName, age, world, parameters);
         }
     }
 }

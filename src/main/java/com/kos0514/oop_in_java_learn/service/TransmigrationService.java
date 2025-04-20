@@ -61,6 +61,9 @@ public class TransmigrationService {
             log.info("転生が完了しました！");
             log.info("名前: {}", transmigrator.getSoulName().getName());
             log.info("転生先: {}", transmigrator.getWorld().getName());
+
+            // 基礎パラメータの表示
+            displayTransmigratorParameters(transmigrator);
         }
     }
 
@@ -115,8 +118,8 @@ public class TransmigrationService {
         log.info("【転生先世界の選択】");
 
         // 利用可能な世界の一覧を表示
-        for (int i = 0; i < availableWorlds.size(); i++) {
-            World world = availableWorlds.get(i);
+        for (var i = 0; i < availableWorlds.size(); i++) {
+            var world = availableWorlds.get(i);
             log.info("{}. {}", i + 1, world.getName());
             log.info("   {}", world.getDescription());
             log.info("");
@@ -168,4 +171,23 @@ public class TransmigrationService {
         log.info("======================================");
     }
 
+    /**
+     * 転生者の基礎パラメータを表示します。
+     *
+     * @param transmigrator 転生者オブジェクト
+     */
+    private void displayTransmigratorParameters(Transmigrator transmigrator) {
+        var params = transmigrator.getParameters();
+        printSeparator();
+        log.info("【基礎パラメータ】");
+        log.info("STR: {}", params.getStrength());
+        log.info("VIT: {}", params.getVitality());
+        log.info("INT: {}", params.getIntelligence());
+        log.info("AGI: {}", params.getAgility());
+        log.info("DEX: {}", params.getDexterity());
+        log.info("LUC: {}", params.getLuck());
+        log.info("HP: {}", params.getHealthPoints());
+        log.info("MP: {}", params.getMagicPoints());
+        printSeparator();
+    }
 }
