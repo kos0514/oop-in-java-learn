@@ -59,7 +59,7 @@ public class TransmigrationService {
             executeTransmigration(transmigrator);
 
             log.info("転生が完了しました！");
-            log.info("名前: {}", transmigrator.getSoulName().getFullName());
+            log.info("名前: {}", transmigrator.getSoulName().getName());
             log.info("転生先: {}", transmigrator.getWorld().getName());
         }
     }
@@ -74,13 +74,9 @@ public class TransmigrationService {
         SoulName soulName = null;
         while (soulName == null) {
             try {
-                log.info("転生者の名前（名）を入力してください:");
-                var firstName = scanner.nextLine();
-
-                log.info("転生者の名前（姓）を入力してください:");
-                var lastName = scanner.nextLine();
-
-                soulName = SoulName.of(firstName, lastName);
+                log.info("転生者の名前を入力してください:");
+                var name = scanner.nextLine();
+                soulName = SoulName.of(name);
             } catch (IllegalArgumentException e) {
                 log.warn(e.getMessage());
             }
@@ -158,11 +154,11 @@ public class TransmigrationService {
      * @param transmigrator 転生者オブジェクト
      */
     private void executeTransmigration(Transmigrator transmigrator) {
-        var fullName = transmigrator.getSoulName().getFullName();
+        var name = transmigrator.getSoulName().getName();
         var worldName = transmigrator.getWorld().getName();
 
-        log.info("{}さんの転生を実行しています...", fullName);
-        log.info("転生完了: {}さんは、{}に転生しました！", fullName, worldName);
+        log.info("{}さんの転生を実行しています...", name);
+        log.info("転生完了: {}さんは、{}に転生しました！", name, worldName);
     }
 
     /**

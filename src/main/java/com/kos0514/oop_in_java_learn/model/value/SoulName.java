@@ -7,7 +7,7 @@ import lombok.Value;
 /**
  * 転生者の名前を表す値オブジェクト。
  * <p>
- * この不変クラスは転生者の名前（名と姓）を文字列として保持します。
+ * この不変クラスは転生者の名前を文字列として保持します。(姓・名は分割されません)
  * Lombokの{@code @Value}アノテーションを使用しているため、
  * 全フィールドは暗黙的にprivate finalとなり、
  * getter、equals、hashCode、toStringメソッドが自動生成されます。
@@ -17,51 +17,30 @@ import lombok.Value;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SoulName {
     /**
-     * 名
+     * 転生者の名前
      */
-    String firstName;
-
-    /**
-     * 姓
-     */
-    String lastName;
+    String name;
 
     /**
      * 名と姓から転生者の名前を表す値オブジェクトを生成します
      *
-     * @param firstName 名
-     * @param lastName 姓
-     * @return 妥当性が確認された名前の値オブジェクト
-     * @throws IllegalArgumentException 名または姓が空の場合
+     * @param name 転生者の名前
+     * @throws IllegalArgumentException 転生者の名前
      */
-    public static SoulName of(String firstName, String lastName) {
-        validate(firstName, lastName);
-        return new SoulName(firstName, lastName);
+    public static SoulName of(String name) throws IllegalArgumentException {
+        validate(name);
+        return new SoulName(name);
     }
 
     /**
-     * 名と姓の妥当性を検証します
+     * 転生者の名前の妥当性を検証します
      *
-     * @param firstName 検証する名
-     * @param lastName 検証する姓
-     * @throws IllegalArgumentException 名または姓が空の場合
+     * @param name 転生者の名前
+     * @throws IllegalArgumentException 転生者の名前が空の場合
      */
-    private static void validate(String firstName, String lastName) {
-        if (firstName == null || firstName.trim().isEmpty()) {
-            throw new IllegalArgumentException("名前（名）は空にできません");
+    private static void validate(String name) throws IllegalArgumentException {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("名前は空にできません");
         }
-
-        if (lastName == null || lastName.trim().isEmpty()) {
-            throw new IllegalArgumentException("名前（姓）は空にできません");
-        }
-    }
-
-    /**
-     * 「姓 名」形式のフルネームを取得します
-     *
-     * @return 「姓 名」形式のフルネーム
-     */
-    public String getFullName() {
-        return lastName + " " + firstName;
     }
 }
