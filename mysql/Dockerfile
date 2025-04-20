@@ -8,4 +8,4 @@ ENV LC_ALL ja_JP.UTF-8
 ENV TZ Asia/Tokyo
 
 # 初期化スクリプトをコピー（必要に応じて）
-# COPY ./init.sql /docker-entrypoint-initdb.d/
+COPY ./init.sql /docker-entrypoint-initdb.d/
