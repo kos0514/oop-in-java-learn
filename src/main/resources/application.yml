@@ -1,3 +1,14 @@
 spring:
   application:
     name: oop-in-java-learn
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/transmigration?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Tokyo
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.kos0514.oop_in_java_learn.model

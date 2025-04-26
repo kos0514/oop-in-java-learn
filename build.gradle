@@ -23,8 +23,40 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.36'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// MyBatis関連の依存関係を追加
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.0'
+	implementation 'mysql:mysql-connector-java:8.0.33'
+
+	// MyBatis Generator（自動生成用）
+	compileOnly 'org.mybatis.generator:mybatis-generator-core:1.4.2'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.register('mbGenerator', JavaExec) {
+	description 'MyBatis Generator を実行します'
+	classpath = configurations.compileClasspath
+	mainClass = 'org.mybatis.generator.api.ShellRunner'
+	args = ['-configfile', 'src/main/resources/mybatis/generatorConfig.xml', '-overwrite']
+
+	doFirst {
+		// 削除するディレクトリの定義
+		def generatedMapperDir = file('src/main/java/com/kos0514/oop_in_java_learn/mapper/generated')
+		def generatedEntityDir = file('src/main/java/com/kos0514/oop_in_java_learn/entity/generated')
+
+		// 指定ディレクトリが存在する場合、削除する
+		if (generatedMapperDir.exists()) {
+			println "Deleting directory: ${generatedMapperDir}"
+			generatedMapperDir.deleteDir()
+		}
+		if (generatedEntityDir.exists()) {
+			println "Deleting directory: ${generatedEntityDir}"
+			generatedEntityDir.deleteDir()
+		}
+	}
+
 }
