@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.function.IntFunction;
 
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+
 /**
  * じゃんけんゲームを実装する汎用的なコンポーネント。
  * 様々なゲームシナリオで再利用可能なように設計されています。
@@ -65,7 +67,9 @@ public class RockPaperScissorsGame {
 
         // maxRounds回勝つか、プレイヤーがやめる場合ループ終了
         do {
-            log.info("\n【{}回目のじゃんけん】", wins + 1);
+            printSeparator();
+            log.info("【{}回目のじゃんけん】", wins + 1);
+            printSeparator();
 
             if (!playOneRound(scanner)) {
                 log.info("負けてしまいました...");

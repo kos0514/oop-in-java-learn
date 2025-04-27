@@ -30,6 +30,7 @@ public class SelectWorldService {
     public World selectWorld(Scanner scanner) {
         var availableWorlds = worldRepository.getAvailableWorlds();
 
+        printSeparator();
         log.info("【転生先世界の選択】");
 
         // 利用可能な世界の一覧を表示
@@ -39,6 +40,7 @@ public class SelectWorldService {
             log.info("   {}", world.getDescription());
             log.info("");
         }
+        printSeparator();
 
         World selectedWorld = null;
         while (selectedWorld == null) {

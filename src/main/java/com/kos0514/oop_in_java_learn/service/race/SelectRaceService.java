@@ -67,11 +67,8 @@ public class SelectRaceService {
         var gameTitle = "じゃんけんゲーム";
         var description = String.format(
                 """
-                        レア種族を選ぶには、じゃんけんに勝つ必要があります。
-                        %s: 通常選択可能
-                        %s: 1回勝利で選択可能
-                        %s: 2回連続勝利で選択可能
-                        %s: 3回連続勝利で選択可能""",
+                %s: 通常選択可能 %s: 1回勝利で選択可能, %s: 2回連続勝利で選択可能, %s: 3回連続勝利で選択可能
+                """,
                 STANDARD.name(),
                 UNIQUE.name(),
                 LEGENDARY.name(),
@@ -127,6 +124,7 @@ public class SelectRaceService {
      * @param races 表示する種族リスト
      */
     private void displayAvailableRaces(List<Race> races) {
+        printSeparator();
         log.info("【選択可能な種族】");
         for (var i = 0; i < races.size(); i++) {
             var race = races.get(i);
@@ -135,6 +133,7 @@ public class SelectRaceService {
             log.info("   {}", race.getDescription());
             log.info("");
         }
+        printSeparator();
     }
 
     /**
