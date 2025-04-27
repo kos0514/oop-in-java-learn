@@ -1,5 +1,6 @@
 package com.kos0514.oop_in_java_learn.model.value;
 
+import com.kos0514.oop_in_java_learn.entity.generated.RaceParameterModifier;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -79,16 +80,47 @@ public class BaseParameters {
     }
 
     /**
+     * 年齢、SoulId、および種族に基づいた基礎パラメータを生成します
+     *
+     * @param age 転生者の年齢
+     * @param soulId 転生者の魂ID（ランダム要素の生成に使用）
+     * @param raceParameterModifier 種族のパラメータ修正値
+     * @return 年齢、SoulId、および種族に基づいて調整された基礎パラメータの値オブジェクト
+     */
+    public static BaseParameters generateFrom(Age age, SoulId soulId, RaceParameterModifier raceParameterModifier) {
+        // 既存のgenerateFromメソッドを呼び出して基本パラメータを取得
+        var baseParams = generateFrom(age, soulId);
+
+        // 種族の修正値がnullの場合は基本パラメータをそのまま返す
+        if (raceParameterModifier == null) {
+            return baseParams;
+        }
+
+        // 種族の修正値を適用
+        var adjustedStrength = Math.max(1, baseParams.getStrength() + raceParameterModifier.getStrengthMod());
+        var adjustedVitality = Math.max(1, baseParams.getVitality() + raceParameterModifier.getVitalityMod());
+        var adjustedIntelligence = Math.max(1, baseParams.getIntelligence() + raceParameterModifier.getIntelligenceMod());
+        var adjustedAgility = Math.max(1, baseParams.getAgility() + raceParameterModifier.getAgilityMod());
+        var adjustedDexterity = Math.max(1, baseParams.getDexterity() + raceParameterModifier.getDexterityMod());
+        var adjustedLuck = Math.max(1, baseParams.getLuck() + raceParameterModifier.getLuckMod());
+        var adjustedHealthPoints = Math.max(1, baseParams.getHealthPoints() + raceParameterModifier.getHealthPointsMod());
+        var adjustedMagicPoints = Math.max(1, baseParams.getMagicPoints() + raceParameterModifier.getMagicPointsMod());
+
+        return of(adjustedStrength, adjustedVitality, adjustedIntelligence, adjustedAgility,
+                adjustedDexterity, adjustedLuck, adjustedHealthPoints, adjustedMagicPoints);
+    }
+
+    /**
      * 年齢とSoulIdに基づいた基礎パラメータを生成します
      * 
      * @param age 転生者の年齢
      * @param soulId 転生者の魂ID（ランダム要素の生成に使用）
      * @return 年齢とSoulIdに基づいて調整された基礎パラメータの値オブジェクト
      */
-    public static BaseParameters generateFrom(Age age, SoulId soulId) {
+    private static BaseParameters generateFrom(Age age, SoulId soulId) {
         // 年齢に基づいた基本パラメータの生成ロジック
         var ageValue = age.getValue();
-        
+
         // 基本値
         var baseStrength = 10;
         var baseVitality = 10;
@@ -98,7 +130,7 @@ public class BaseParameters {
         var baseLuck = 10;
         var baseHealthPoints = 100;
         var baseMagicPoints = 50;
-        
+
         // 年齢による調整（例）
         // 若年層: agility/dexterity高め、intelligence低め
         // 中年層: バランス型
@@ -112,10 +144,10 @@ public class BaseParameters {
             baseAgility -= 1;
             baseDexterity -= 1;
         }
-        
+
         // SoulIdからランダム要素を生成
         var random = new Random(soulId.getId().getLeastSignificantBits());
-        
+
         // ±2の範囲でランダムに変動させ、かつ最小値を確保（1未満にならないようにする）
         var randomizedStrength = Math.max(1, baseStrength + random.nextInt(5) - 2);
         var randomizedVitality = Math.max(1, baseVitality + random.nextInt(5) - 2);
@@ -123,11 +155,11 @@ public class BaseParameters {
         var randomizedAgility = Math.max(1, baseAgility + random.nextInt(5) - 2);
         var randomizedDexterity = Math.max(1, baseDexterity + random.nextInt(5) - 2);
         var randomizedLuck = Math.max(1, baseLuck + random.nextInt(5) - 2);
-        
+
         // HP/MPも若干のランダム要素を持たせる
         var randomizedHealthPoints = baseHealthPoints + (random.nextInt(21) - 10); // ±10
         var randomizedMagicPoints = baseMagicPoints + (random.nextInt(11) - 5);   // ±5
-        
+
         return of(randomizedStrength, randomizedVitality, randomizedIntelligence, randomizedAgility, 
                  randomizedDexterity, randomizedLuck, randomizedHealthPoints, randomizedMagicPoints);
     }

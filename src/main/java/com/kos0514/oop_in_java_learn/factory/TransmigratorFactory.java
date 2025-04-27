@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn.factory;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
+import com.kos0514.oop_in_java_learn.mapper.RaceParameterModifierMapper;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
@@ -8,13 +9,17 @@ import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
  * ビルダーパターンを利用した転生者ファクトリー
  */
 @Component
+@RequiredArgsConstructor
 public class TransmigratorFactory {
+
+    private final RaceParameterModifierMapper raceParameterModifierMapper;
 
     /**
      * 転生者を生成します。
@@ -29,13 +34,16 @@ public class TransmigratorFactory {
         // 魂IDを先に生成して、基礎パラメータ生成に使用する
         var soulId = SoulId.newId();
 
+        // 種族のパラメータ修正値を取得 (selectByPrimaryKeyを使用)
+        var raceParameterModifier = raceParameterModifierMapper.selectByPrimaryKey(race.getId()).orElse(null);
+
         return builder()
                 .withSoulId(soulId)
                 .withSoulName(soulName)
                 .withAge(age)
                 .withWorld(world)
                 .withRace(race)
-                .withBaseParameters(BaseParameters.generateFrom(age, soulId))
+                .withBaseParameters(BaseParameters.generateFrom(age, soulId, raceParameterModifier))
                 .build();
     }
 
