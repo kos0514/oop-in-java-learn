@@ -1,5 +1,6 @@
 package com.kos0514.oop_in_java_learn.factory;
 
+import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
@@ -21,9 +22,10 @@ public class TransmigratorFactory {
      * @param soulName 転生者の名前を表す値オブジェクト
      * @param age 転生者の年齢を表す値オブジェクト
      * @param world 転生先の世界
+     * @param race 転生する種族
      * @return Transmigrator インスタンス
      */
-    public Transmigrator createTransmigrator(SoulName soulName, Age age, World world) {
+    public Transmigrator createTransmigrator(SoulName soulName, Age age, World world, Race race) {
         // 魂IDを先に生成して、基礎パラメータ生成に使用する
         var soulId = SoulId.newId();
 
@@ -32,6 +34,7 @@ public class TransmigratorFactory {
                 .withSoulName(soulName)
                 .withAge(age)
                 .withWorld(world)
+                .withRace(race)
                 .withBaseParameters(BaseParameters.generateFrom(age, soulId))
                 .build();
     }
@@ -53,6 +56,7 @@ public class TransmigratorFactory {
         private SoulName soulName;
         private Age age;
         private World world;
+        private Race race;
         private BaseParameters parameters;
 
         /**
@@ -111,12 +115,23 @@ public class TransmigratorFactory {
         }
 
         /**
+         * 転生する種族を設定します。
+         *
+         * @param race 転生する種族
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withRace(Race race) {
+            this.race = race;
+            return this;
+        }
+
+        /**
          * ビルダーの設定値から転生者オブジェクトを構築します。
          *
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            return new Transmigrator(soulId, soulName, age, world, parameters);
+            return new Transmigrator(soulId, soulName, age, world, parameters, race);
         }
     }
 }

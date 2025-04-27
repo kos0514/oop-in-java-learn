@@ -1,9 +1,11 @@
 package com.kos0514.oop_in_java_learn.service;
 
+import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.repository.WorldRepository;
+import com.kos0514.oop_in_java_learn.service.race.SelectRaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
@@ -30,8 +32,8 @@ import java.util.Scanner;
 public class TransmigrationService {
 
     private final TransmigratorFactory transmigratorFactory;
-
     private final WorldRepository worldRepository;
+    private final SelectRaceService selectRaceService;
 
     /**
      * 転生プロセスを開始します。
@@ -52,8 +54,11 @@ public class TransmigrationService {
             // 世界選択
             var selectedWorld = selectWorld(scanner);
 
+            // 種族選択
+            var selectedRace = selectRaceService.selectRace(scanner);
+
             // ファクトリーメソッドで転生者を作成
-            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age, selectedWorld);
+            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age, selectedWorld, selectedRace);
 
             // 転生の実行
             executeTransmigration(transmigrator);
@@ -61,6 +66,7 @@ public class TransmigrationService {
             log.info("転生が完了しました！");
             log.info("名前: {}", transmigrator.getSoulName().getName());
             log.info("転生先: {}", transmigrator.getWorld().getName());
+            log.info("種族: {}", transmigrator.getRace().getJapaneseName());
 
             // 基礎パラメータの表示
             displayTransmigratorParameters(transmigrator);
@@ -159,9 +165,10 @@ public class TransmigrationService {
     private void executeTransmigration(Transmigrator transmigrator) {
         var name = transmigrator.getSoulName().getName();
         var worldName = transmigrator.getWorld().getName();
+        var raceName = transmigrator.getRace().getJapaneseName();
 
         log.info("{}さんの転生を実行しています...", name);
-        log.info("転生完了: {}さんは、{}に転生しました！", name, worldName);
+        log.info("転生完了: {}さんは、{}の{}種族に転生しました！", name, worldName, raceName);
     }
 
     /**

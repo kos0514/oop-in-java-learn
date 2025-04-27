@@ -1,5 +1,6 @@
 package com.kos0514.oop_in_java_learn.model;
 
+import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
@@ -42,4 +43,9 @@ public class Transmigrator {
      * 基礎パラメータ
      */
     BaseParameters parameters;
+
+    /**
+     * 種族
+     */
+    Race race;
 }
