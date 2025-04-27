@@ -1,6 +1,5 @@
 package com.kos0514.oop_in_java_learn.service;
 
-import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
@@ -168,7 +167,7 @@ public class TransmigrationService {
         var raceName = transmigrator.getRace().getJapaneseName();
 
         log.info("{}さんの転生を実行しています...", name);
-        log.info("転生完了: {}さんは、{}の{}種族に転生しました！", name, worldName, raceName);
+        log.info("転生完了: 「{}」さんは、「{}」の「{}」種族に転生しました！", name, worldName, raceName);
     }
 
     /**

@@ -40,12 +40,12 @@ public class Transmigrator {
     World world;
 
     /**
-     * 基礎パラメータ
-     */
-    BaseParameters parameters;
-
-    /**
      * 種族
      */
     Race race;
+
+    /**
+     * 基礎パラメータ
+     */
+    BaseParameters parameters;
 }

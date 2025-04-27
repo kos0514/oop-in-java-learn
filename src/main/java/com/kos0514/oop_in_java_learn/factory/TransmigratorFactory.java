@@ -104,17 +104,6 @@ public class TransmigratorFactory {
         }
 
         /**
-         * 基礎パラメータを設定します。
-         *
-         * @param parameters 基礎パラメータを表す値オブジェクト
-         * @return このビルダーインスタンス
-         */
-        public TransmigratorBuilder withBaseParameters(BaseParameters parameters) {
-            this.parameters = parameters;
-            return this;
-        }
-
-        /**
          * 転生する種族を設定します。
          *
          * @param race 転生する種族
@@ -126,12 +115,23 @@ public class TransmigratorFactory {
         }
 
         /**
+         * 基礎パラメータを設定します。
+         *
+         * @param parameters 基礎パラメータを表す値オブジェクト
+         * @return このビルダーインスタンス
+         */
+        public TransmigratorBuilder withBaseParameters(BaseParameters parameters) {
+            this.parameters = parameters;
+            return this;
+        }
+
+        /**
          * ビルダーの設定値から転生者オブジェクトを構築します。
          *
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            return new Transmigrator(soulId, soulName, age, world, parameters, race);
+            return new Transmigrator(soulId, soulName, age, world, race, parameters);
         }
     }
 }
