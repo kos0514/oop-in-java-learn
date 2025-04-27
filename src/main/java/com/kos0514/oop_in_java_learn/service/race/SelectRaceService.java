@@ -17,6 +17,9 @@ import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * 種族選択とじゃんけんゲームを管理するサービスクラス。
@@ -158,7 +161,7 @@ public class SelectRaceService {
                     log.warn("有効な番号を入力してください (1-{})。", availableRaces.size());
                 }
             } catch (NumberFormatException e) {
-                log.warn("数値を入力してください。");
+                warnInputNumber();
             }
         }
 
@@ -171,15 +174,13 @@ public class SelectRaceService {
      * @param race 表示する種族
      */
     private void displaySelectedRace(Race race) {
-        log.info("");
-        printSeparator();
+        startPrintSeparator();
         log.info("{}種族に転生が決定しました！", race.getJapaneseName());
         log.info("【種族の説明】");
         log.info("{}", race.getDescription());
         log.info("【特殊能力】");
         log.info("{}", race.getSpecialAbility());
-        printSeparator();
-        log.info("");
+        endPrintSeparator();
     }
 
 }

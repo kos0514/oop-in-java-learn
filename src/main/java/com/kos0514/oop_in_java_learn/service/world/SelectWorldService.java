@@ -6,9 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-
 import java.util.Scanner;
+
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * 転生先の世界選択を管理するサービスクラス。
@@ -30,7 +32,7 @@ public class SelectWorldService {
     public World selectWorld(Scanner scanner) {
         var availableWorlds = worldRepository.getAvailableWorlds();
 
-        printSeparator();
+        startPrintSeparator();
         log.info("【転生先世界の選択】");
 
         // 利用可能な世界の一覧を表示
@@ -38,9 +40,8 @@ public class SelectWorldService {
             var world = availableWorlds.get(i);
             log.info("{}. {}", i + 1, world.getName());
             log.info("   {}", world.getDescription());
-            log.info("");
         }
-        printSeparator();
+        endPrintSeparator();
 
         World selectedWorld = null;
         while (selectedWorld == null) {
@@ -48,20 +49,19 @@ public class SelectWorldService {
                 log.info("番号を入力してください (1-{}):", availableWorlds.size());
                 var selection = Integer.parseInt(scanner.nextLine());
 
-                if (selection >= 1 && selection <= availableWorlds.size()) {
-                    selectedWorld = availableWorlds.get(selection - 1);
-                    log.info("");
-                    printSeparator();
-                    log.info("{}に転生が決定しました！", selectedWorld.getName());
-                    log.info("【世界の説明】");
-                    log.info("{}", selectedWorld.getDescription());
-                    printSeparator();
-                    log.info("");
-                } else {
+                if (selection < 1 || selection > availableWorlds.size()) {
                     log.warn("有効な番号を入力してください (1-{})。", availableWorlds.size());
+                    continue; // 条件に合わない場合は次のループへ
                 }
+
+                selectedWorld = availableWorlds.get(selection - 1);
+                startPrintSeparator();
+                log.info("{}に転生が決定しました！", selectedWorld.getName());
+                log.info("【世界の説明】");
+                log.info("{}", selectedWorld.getDescription());
+                endPrintSeparator();
             } catch (NumberFormatException e) {
-                log.warn("数値を入力してください。");
+                warnInputNumber();
             }
         }
 

@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.function.IntFunction;
 
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * じゃんけんゲームを実装する汎用的なコンポーネント。
@@ -105,7 +106,7 @@ public class RockPaperScissorsGame {
                     default -> log.warn("1か2を入力してください。");
                 }
             } catch (NumberFormatException e) {
-                log.warn("数値を入力してください。");
+                warnInputNumber();
             }
         }
     }
@@ -158,7 +159,7 @@ public class RockPaperScissorsGame {
                     log.warn("1から3の数字を入力してください。");
                 }
             } catch (NumberFormatException e) {
-                log.warn("数値を入力してください。");
+                warnInputNumber();
             }
         }
         return playerChoice;
