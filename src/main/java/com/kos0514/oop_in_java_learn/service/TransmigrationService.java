@@ -11,6 +11,8 @@ import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
 
 import lombok.RequiredArgsConstructor;
 
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+
 import java.util.Scanner;
 
 /**
@@ -125,12 +127,6 @@ public class TransmigrationService {
         log.info("転生完了: 「{}」さんは、「{}」の「{}」種族に転生しました！", name, worldName, raceName);
     }
 
-    /**
-     * 転生プロセスのセパレーターを表示します。
-     */
-    private void printSeparator() {
-        log.info("======================================");
-    }
 
     /**
      * 転生者の基礎パラメータを表示します。

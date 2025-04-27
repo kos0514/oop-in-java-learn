@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+
 import java.util.Scanner;
 
 /**
@@ -64,10 +66,4 @@ public class SelectWorldService {
         return selectedWorld;
     }
 
-    /**
-     * 転生プロセスのセパレーターを表示します。
-     */
-    private void printSeparator() {
-        log.info("======================================");
-    }
 }

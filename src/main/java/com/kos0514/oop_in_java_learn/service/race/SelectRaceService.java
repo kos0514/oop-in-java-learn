@@ -16,6 +16,7 @@ import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
 
 /**
  * 種族選択とじゃんけんゲームを管理するサービスクラス。
@@ -182,10 +183,4 @@ public class SelectRaceService {
         log.info("");
     }
 
-    /**
-     * 転生プロセスのセパレーターを表示します。
-     */
-    private void printSeparator() {
-        log.info("======================================");
-    }
 }
