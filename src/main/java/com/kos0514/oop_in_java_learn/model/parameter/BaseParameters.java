@@ -1,6 +1,8 @@
-package com.kos0514.oop_in_java_learn.model.value;
+package com.kos0514.oop_in_java_learn.model.parameter;
 
 import com.kos0514.oop_in_java_learn.entity.generated.RaceParameterModifier;
+import com.kos0514.oop_in_java_learn.model.value.Age;
+import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -22,61 +24,68 @@ public class BaseParameters {
     /**
      * 筋力 - 物理的な力を示す数値
      */
-    int strength;
+    Strength strength;
 
     /**
      * 体力 - 耐久性や最大HPへの影響
      */
-    int vitality;
+    Vitality vitality;
 
     /**
      * 知力 - 高度な思考力や最大MPへ影響
      */
-    int intelligence;
+    Intelligence intelligence;
 
     /**
      * 敏捷性 - 素早さや回避率
      */
-    int agility;
+    Agility agility;
 
     /**
      * 器用さ - 精密な操作のスキルに影響
      */
-    int dexterity;
+    Dexterity dexterity;
 
     /**
      * 運 - アイテムドロップ率やイベント発生確率
      */
-    int luck;
+    Luck luck;
 
     /**
      * 体力値 - 総耐久値
      */
-    int healthPoints;
+    HealthPoints healthPoints;
 
     /**
      * 魔力値 - 魔法を扱うエネルギー
      */
-    int magicPoints;
+    MagicPoints magicPoints;
 
     /**
-     * 基礎パラメータの値オブジェクトを生成します
-     * 内部使用のみを想定しているため、privateアクセス修飾子を使用
+     * 整数値から基礎パラメータの値オブジェクトを生成します
      *
-     * @param strength 筋力
-     * @param vitality 体力
-     * @param intelligence 知力
-     * @param agility 敏捷性
-     * @param dexterity 器用さ
-     * @param luck 運
-     * @param healthPoints 体力値
-     * @param magicPoints 魔力値
+     * @param strength 筋力の整数値
+     * @param vitality 体力の整数値
+     * @param intelligence 知力の整数値
+     * @param agility 敏捷性の整数値
+     * @param dexterity 器用さの整数値
+     * @param luck 運の整数値
+     * @param healthPoints 体力値の整数値
+     * @param magicPoints 魔力値の整数値
      * @return 妥当性が確認された基礎パラメータの値オブジェクト
      * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
      */
     private static BaseParameters of(int strength, int vitality, int intelligence, int agility, int dexterity, int luck, int healthPoints, int magicPoints) {
-        validateParameters(strength, vitality, intelligence, agility, dexterity, luck, healthPoints, magicPoints);
-        return new BaseParameters(strength, vitality, intelligence, agility, dexterity, luck, healthPoints, magicPoints);
+        return new BaseParameters(
+            Strength.of(strength),
+            Vitality.of(vitality),
+            Intelligence.of(intelligence),
+            Agility.of(agility),
+            Dexterity.of(dexterity),
+            Luck.of(luck),
+            HealthPoints.of(healthPoints),
+            MagicPoints.of(magicPoints)
+        );
     }
 
     /**
@@ -97,14 +106,14 @@ public class BaseParameters {
         }
 
         // 種族の修正値を適用
-        var adjustedStrength = Math.max(1, baseParams.getStrength() + raceParameterModifier.getStrengthMod());
-        var adjustedVitality = Math.max(1, baseParams.getVitality() + raceParameterModifier.getVitalityMod());
-        var adjustedIntelligence = Math.max(1, baseParams.getIntelligence() + raceParameterModifier.getIntelligenceMod());
-        var adjustedAgility = Math.max(1, baseParams.getAgility() + raceParameterModifier.getAgilityMod());
-        var adjustedDexterity = Math.max(1, baseParams.getDexterity() + raceParameterModifier.getDexterityMod());
-        var adjustedLuck = Math.max(1, baseParams.getLuck() + raceParameterModifier.getLuckMod());
-        var adjustedHealthPoints = Math.max(1, baseParams.getHealthPoints() + raceParameterModifier.getHealthPointsMod());
-        var adjustedMagicPoints = Math.max(1, baseParams.getMagicPoints() + raceParameterModifier.getMagicPointsMod());
+        var adjustedStrength = Math.max(1, baseParams.getStrength().getValue() + raceParameterModifier.getStrengthMod());
+        var adjustedVitality = Math.max(1, baseParams.getVitality().getValue() + raceParameterModifier.getVitalityMod());
+        var adjustedIntelligence = Math.max(1, baseParams.getIntelligence().getValue() + raceParameterModifier.getIntelligenceMod());
+        var adjustedAgility = Math.max(1, baseParams.getAgility().getValue() + raceParameterModifier.getAgilityMod());
+        var adjustedDexterity = Math.max(1, baseParams.getDexterity().getValue() + raceParameterModifier.getDexterityMod());
+        var adjustedLuck = Math.max(1, baseParams.getLuck().getValue() + raceParameterModifier.getLuckMod());
+        var adjustedHealthPoints = Math.max(1, baseParams.getHealthPoints().getValue() + raceParameterModifier.getHealthPointsMod());
+        var adjustedMagicPoints = Math.max(1, baseParams.getMagicPoints().getValue() + raceParameterModifier.getMagicPointsMod());
 
         return of(adjustedStrength, adjustedVitality, adjustedIntelligence, adjustedAgility,
                 adjustedDexterity, adjustedLuck, adjustedHealthPoints, adjustedMagicPoints);
@@ -162,55 +171,5 @@ public class BaseParameters {
 
         return of(randomizedStrength, randomizedVitality, randomizedIntelligence, randomizedAgility, 
                  randomizedDexterity, randomizedLuck, randomizedHealthPoints, randomizedMagicPoints);
-    }
-
-    /**
-     * パラメータ値の妥当性を検証します
-     *
-     * @param strength 筋力
-     * @param vitality 体力
-     * @param intelligence 知力
-     * @param agility 敏捷性
-     * @param dexterity 器用さ
-     * @param luck 運
-     * @param healthPoints 体力値
-     * @param magicPoints 魔力値
-     * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
-     */
-    private static void validateParameters(int strength, int vitality, int intelligence, int agility, int dexterity, int luck, int healthPoints, int magicPoints) {
-        validateStatParameter("strength", strength);
-        validateStatParameter("vitality", vitality);
-        validateStatParameter("intelligence", intelligence);
-        validateStatParameter("agility", agility);
-        validateStatParameter("dexterity", dexterity);
-        validateStatParameter("luck", luck);
-        validateHpMpParameter("healthPoints", healthPoints);
-        validateHpMpParameter("magicPoints", magicPoints);
-    }
-
-    /**
-     * 基本ステータスパラメータの妥当性を検証します
-     *
-     * @param paramName パラメータ名
-     * @param value パラメータ値
-     * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
-     */
-    private static void validateStatParameter(String paramName, int value) {
-        if (value < 1) {
-            throw new IllegalArgumentException(paramName + "は1以上の値である必要があります");
-        }
-    }
-
-    /**
-     * HP/MPパラメータの妥当性を検証します
-     *
-     * @param paramName パラメータ名
-     * @param value パラメータ値
-     * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
-     */
-    private static void validateHpMpParameter(String paramName, int value) {
-        if (value < 1) {
-            throw new IllegalArgumentException(paramName + "は1以上の値である必要があります");
-        }
     }
 }

@@ -4,7 +4,7 @@ import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.mapper.RaceParameterModifierMapper;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
-import com.kos0514.oop_in_java_learn.model.value.BaseParameters;
+import com.kos0514.oop_in_java_learn.model.parameter.BaseParameters;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
@@ -34,7 +34,7 @@ public class TransmigratorFactory {
         // 魂IDを先に生成して、基礎パラメータ生成に使用する
         var soulId = SoulId.newId();
 
-        // 種族のパラメータ修正値を取得 (selectByPrimaryKeyを使用)
+        // 種族のパラメータ修正値を取得
         var raceParameterModifier = raceParameterModifierMapper.selectByPrimaryKey(race.getId()).orElse(null);
 
         return builder()

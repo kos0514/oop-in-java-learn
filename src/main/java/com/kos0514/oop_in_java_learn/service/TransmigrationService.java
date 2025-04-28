@@ -137,14 +137,14 @@ public class TransmigrationService {
         var params = transmigrator.getParameters();
         printSeparator();
         log.info("【基礎パラメータ】");
-        log.info("STR: {}", params.getStrength());
-        log.info("VIT: {}", params.getVitality());
-        log.info("INT: {}", params.getIntelligence());
-        log.info("AGI: {}", params.getAgility());
-        log.info("DEX: {}", params.getDexterity());
-        log.info("LUC: {}", params.getLuck());
-        log.info("HP: {}", params.getHealthPoints());
-        log.info("MP: {}", params.getMagicPoints());
+        log.info("STR: {}", params.getStrength().getValue());
+        log.info("VIT: {}", params.getVitality().getValue());
+        log.info("INT: {}", params.getIntelligence().getValue());
+        log.info("AGI: {}", params.getAgility().getValue());
+        log.info("DEX: {}", params.getDexterity().getValue());
+        log.info("LUC: {}", params.getLuck().getValue());
+        log.info("HP: {}", params.getHealthPoints().getValue());
+        log.info("MP: {}", params.getMagicPoints().getValue());
         printSeparator();
     }
 }
