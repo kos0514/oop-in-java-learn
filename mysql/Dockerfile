@@ -7,5 +7,12 @@ ENV LC_ALL ja_JP.UTF-8
 # タイムゾーンの設定
 ENV TZ Asia/Tokyo
 
-# 初期化スクリプトをコピー（必要に応じて）
-COPY ./init.sql /docker-entrypoint-initdb.d/
+# entrypoint.sh をコンテナにコピー
+COPY ./entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# エントリポイントを設定
+ENTRYPOINT ["entrypoint.sh"]
+
+# デフォルトコマンドを設定
+CMD ["mysqld"]
