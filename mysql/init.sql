@@ -1,6 +1,9 @@
 -- データベースの選択
 USE transmigration;
 
+DROP TABLE IF EXISTS race_status_modifiers;
+DROP TABLE IF EXISTS races;
+
 -- 種族テーブル
 CREATE TABLE races (
     id VARCHAR(36) PRIMARY KEY COMMENT '種族の一意識別子',
@@ -13,8 +16,8 @@ CREATE TABLE races (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時'
 ) COMMENT '転生可能な種族の基本情報を管理するテーブル';
 
--- 種族パラメータ修正値テーブル
-CREATE TABLE race_parameter_modifiers (
+-- 種族ステータス修正値テーブル
+CREATE TABLE race_status_modifiers (
     race_id VARCHAR(36) PRIMARY KEY COMMENT '種族ID（racesテーブルの外部キー）',
     strength_mod INT NOT NULL DEFAULT 0 COMMENT '筋力修正値',
     vitality_mod INT NOT NULL DEFAULT 0 COMMENT '体力修正値',
@@ -27,7 +30,7 @@ CREATE TABLE race_parameter_modifiers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
     FOREIGN KEY (race_id) REFERENCES races(id) ON DELETE CASCADE
-) COMMENT '種族ごとのパラメータ修正値を管理するテーブル';
+) COMMENT '種族ごとのステータス修正値を管理するテーブル';
 
 -- 基本種族（スタンダード）
 INSERT INTO races (id, japanese_name, english_name, special_ability, description, rarity) VALUES
@@ -72,8 +75,8 @@ INSERT INTO races (id, japanese_name, english_name, special_ability, description
 ('mimic', 'ミミック', 'Mimic', '「擬態」- 他種族の特殊能力を一時使用可能', 'どんな姿にも変化できる珍しい変身種族なの', 'SECRET'),
 ('soul_of_machine', '機械の魂', 'Soul of Machine', '「仮想現実」- 周囲環境を一時改変', '機械世界から転生した純粋な意識体なの', 'SECRET');
 
--- 種族パラメータ修正値のデータ
-INSERT INTO race_parameter_modifiers (race_id, strength_mod, vitality_mod, intelligence_mod, agility_mod, dexterity_mod, luck_mod, health_points_mod, magic_points_mod) VALUES
+-- 種族ステータス修正値のデータ
+INSERT INTO race_status_modifiers (race_id, strength_mod, vitality_mod, intelligence_mod, agility_mod, dexterity_mod, luck_mod, health_points_mod, magic_points_mod) VALUES
 -- 基本種族（スタンダード）
 ('human', 5, 5, 5, 5, 5, 5, 0, 0),
 ('elf', 0, -2, 3, 3, 0, 0, 0, 0),

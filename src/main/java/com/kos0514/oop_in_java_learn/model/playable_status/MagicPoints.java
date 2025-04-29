@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 魔力値パラメータを表す値オブジェクト
+ * 魔力値ステータスを表す値オブジェクト
  */
-public class MagicPoints extends Parameter {
+public class MagicPoints extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "魔力値";
     

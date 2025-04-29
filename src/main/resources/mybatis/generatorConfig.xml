@@ -40,7 +40,7 @@
         <table tableName="races" domainObjectName="Race" mapperName="RaceGeneratedMapper">
             <generatedKey column="id" sqlStatement="JDBC" identity="false" />
         </table>
-        <table tableName="race_parameter_modifiers" domainObjectName="RaceParameterModifier" mapperName="RaceParameterModifierGeneratedMapper">
+        <table tableName="race_status_modifiers" domainObjectName="RaceStatusModifier" mapperName="RaceStatusModifierGeneratedMapper">
             <generatedKey column="race_id" sqlStatement="JDBC" identity="false" />
         </table>
     </context>

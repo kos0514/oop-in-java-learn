@@ -68,7 +68,7 @@ public class TransmigrationService {
             log.info("転生先: {}", transmigrator.getWorld().getName());
             log.info("種族: {}", transmigrator.getRace().getJapaneseName());
 
-            // 基礎パラメータの表示
+            // 基礎ステータスの表示
             displayTransmigratorParameters(transmigrator);
         }
     }
@@ -129,14 +129,14 @@ public class TransmigrationService {
 
 
     /**
-     * 転生者の基礎パラメータを表示します。
+     * 転生者の基礎ステータスを表示します。
      *
      * @param transmigrator 転生者オブジェクト
      */
     private void displayTransmigratorParameters(Transmigrator transmigrator) {
         var params = transmigrator.getParameters();
         printSeparator();
-        log.info("【基礎パラメータ】");
+        log.info("【基礎ステータス】");
         log.info("STR: {}", params.getStrength().getValue());
         log.info("VIT: {}", params.getVitality().getValue());
         log.info("INT: {}", params.getIntelligence().getValue());

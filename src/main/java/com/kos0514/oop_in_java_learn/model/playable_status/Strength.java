@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 筋力パラメータを表す値オブジェクト
+ * 筋力ステータスを表す値オブジェクト
  */
-public class Strength extends Parameter {
+public class Strength extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "筋力";
     

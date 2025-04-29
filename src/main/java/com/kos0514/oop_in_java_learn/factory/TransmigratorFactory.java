@@ -1,10 +1,10 @@
 package com.kos0514.oop_in_java_learn.factory;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
-import com.kos0514.oop_in_java_learn.mapper.RaceParameterModifierMapper;
+import com.kos0514.oop_in_java_learn.mapper.RaceStatusModifierMapper;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
-import com.kos0514.oop_in_java_learn.model.parameter.BaseParameters;
+import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TransmigratorFactory {
 
-    private final RaceParameterModifierMapper raceParameterModifierMapper;
+    private final RaceStatusModifierMapper raceStatusModifierMapper;
 
     /**
      * 転生者を生成します。
@@ -31,11 +31,11 @@ public class TransmigratorFactory {
      * @return Transmigrator インスタンス
      */
     public Transmigrator createTransmigrator(SoulName soulName, Age age, World world, Race race) {
-        // 魂IDを先に生成して、基礎パラメータ生成に使用する
+        // 魂IDを先に生成して、基礎ステータス生成に使用する
         var soulId = SoulId.newId();
 
-        // 種族のパラメータ修正値を取得
-        var raceParameterModifier = raceParameterModifierMapper.selectByPrimaryKey(race.getId()).orElse(null);
+        // 種族のステータス修正値を取得
+        var raceParameterModifier = raceStatusModifierMapper.selectByPrimaryKey(race.getId()).orElse(null);
 
         return builder()
                 .withSoulId(soulId)
@@ -43,7 +43,7 @@ public class TransmigratorFactory {
                 .withAge(age)
                 .withWorld(world)
                 .withRace(race)
-                .withBaseParameters(BaseParameters.generateFrom(age, soulId, raceParameterModifier))
+                .withPlayableStatuses(PlayableStatuses.generateFrom(age, soulId, raceParameterModifier))
                 .build();
     }
 
@@ -65,7 +65,7 @@ public class TransmigratorFactory {
         private Age age;
         private World world;
         private Race race;
-        private BaseParameters parameters;
+        private PlayableStatuses statuses;
 
         /**
          * 転生者の魂IDを設定します。
@@ -123,13 +123,13 @@ public class TransmigratorFactory {
         }
 
         /**
-         * 基礎パラメータを設定します。
+         * 基礎ステータスを設定します。
          *
-         * @param parameters 基礎パラメータを表す値オブジェクト
+         * @param statuses 基礎ステータスを表す値オブジェクト
          * @return このビルダーインスタンス
          */
-        public TransmigratorBuilder withBaseParameters(BaseParameters parameters) {
-            this.parameters = parameters;
+        public TransmigratorBuilder withPlayableStatuses(PlayableStatuses statuses) {
+            this.statuses = statuses;
             return this;
         }
 
@@ -139,7 +139,7 @@ public class TransmigratorFactory {
          * @return 構築された転生者オブジェクト
          */
         public Transmigrator build() {
-            return new Transmigrator(soulId, soulName, age, world, race, parameters);
+            return new Transmigrator(soulId, soulName, age, world, race, statuses);
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 敏捷性パラメータを表す値オブジェクト
+ * 敏捷性ステータスを表す値オブジェクト
  */
-public class Agility extends Parameter {
+public class Agility extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "敏捷性";
     

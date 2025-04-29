@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 器用さパラメータを表す値オブジェクト
+ * 器用さのステータスを表す値オブジェクト
  */
-public class Dexterity extends Parameter {
+public class Dexterity extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "器用さ";
     

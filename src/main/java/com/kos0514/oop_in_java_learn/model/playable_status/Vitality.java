@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 体力パラメータを表す値オブジェクト
+ * 体力ステータスを表す値オブジェクト
  */
-public class Vitality extends Parameter {
+public class Vitality extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "体力";
     

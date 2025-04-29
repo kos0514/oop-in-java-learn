@@ -1,9 +1,9 @@
-package com.kos0514.oop_in_java_learn.model.parameter;
+package com.kos0514.oop_in_java_learn.model.playable_status;
 
 /**
- * 知力パラメータを表す値オブジェクト
+ * 知力ステータスを表す値オブジェクト
  */
-public class Intelligence extends Parameter {
+public class Intelligence extends PlayableStatus {
     
     private static final String JAPANESE_NAME = "知力";
     
