@@ -1,8 +1,8 @@
 package com.kos0514.oop_in_java_learn.model;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
-import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
+import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.world.World;

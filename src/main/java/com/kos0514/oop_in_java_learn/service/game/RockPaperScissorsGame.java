@@ -7,12 +7,15 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.function.IntFunction;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * じゃんけんゲームを実装する汎用的なコンポーネント。
  * 様々なゲームシナリオで再利用可能なように設計されています。
- * 
+ *
  * <p>このクラスは以下の責任を持ちます：</p>
  * <ul>
  *   <li>じゃんけんゲームの実行</li>
@@ -29,11 +32,11 @@ public class RockPaperScissorsGame {
     /**
      * 特定の条件に基づいてじゃんけんゲームを実行し、結果を変換して返します。
      *
-     * @param <T> 戻り値の型
-     * @param scanner 入力を受け付けるScannerオブジェクト
-     * @param maxRounds 最大ラウンド数
-     * @param gameTitle ゲームのタイトル（ログ表示用）
-     * @param gameDescription ゲームの説明（ログ表示用）
+     * @param <T>               戻り値の型
+     * @param scanner           入力を受け付けるScannerオブジェクト
+     * @param maxRounds         最大ラウンド数
+     * @param gameTitle         ゲームのタイトル（ログ表示用）
+     * @param gameDescription   ゲームの説明（ログ表示用）
      * @param winCountConverter 勝利回数を結果の型に変換する関数
      * @return 変換された結果
      */
@@ -50,10 +53,10 @@ public class RockPaperScissorsGame {
 
     /**
      * じゃんけんゲームを実行し、勝利回数を返します。
-     * 
-     * @param scanner 入力を受け付けるScannerオブジェクト
-     * @param maxRounds 最大ラウンド数
-     * @param gameTitle ゲームのタイトル（ログ表示用）
+     *
+     * @param scanner         入力を受け付けるScannerオブジェクト
+     * @param maxRounds       最大ラウンド数
+     * @param gameTitle       ゲームのタイトル（ログ表示用）
      * @param gameDescription ゲームの説明（ログ表示用）
      * @return 勝利回数
      */

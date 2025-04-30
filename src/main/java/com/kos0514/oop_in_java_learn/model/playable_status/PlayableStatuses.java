@@ -1,6 +1,5 @@
 package com.kos0514.oop_in_java_learn.model.playable_status;
 
-import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -63,27 +62,27 @@ public class PlayableStatuses {
     /**
      * 整数値から基礎ステータスの値オブジェクトを生成します
      *
-     * @param strength 筋力の整数値
-     * @param vitality 体力の整数値
+     * @param strength     筋力の整数値
+     * @param vitality     体力の整数値
      * @param intelligence 知力の整数値
-     * @param agility 敏捷性の整数値
-     * @param dexterity 器用さの整数値
-     * @param luck 運の整数値
+     * @param agility      敏捷性の整数値
+     * @param dexterity    器用さの整数値
+     * @param luck         運の整数値
      * @param healthPoints 体力値の整数値
-     * @param magicPoints 魔力値の整数値
+     * @param magicPoints  魔力値の整数値
      * @return 妥当性が確認された基礎ステータスの値オブジェクト
      * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
      */
     public static PlayableStatuses of(int strength, int vitality, int intelligence, int agility, int dexterity, int luck, int healthPoints, int magicPoints) {
         return new PlayableStatuses(
-            Strength.of(strength),
-            Vitality.of(vitality),
-            Intelligence.of(intelligence),
-            Agility.of(agility),
-            Dexterity.of(dexterity),
-            Luck.of(luck),
-            HealthPoints.of(healthPoints),
-            MagicPoints.of(magicPoints)
+                Strength.of(strength),
+                Vitality.of(vitality),
+                Intelligence.of(intelligence),
+                Agility.of(agility),
+                Dexterity.of(dexterity),
+                Luck.of(luck),
+                HealthPoints.of(healthPoints),
+                MagicPoints.of(magicPoints)
         );
     }
 

@@ -11,11 +11,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.function.IntFunction;
 
-import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
-import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
+import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
+import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * 種族選択とじゃんけんゲームを管理するサービスクラス。
@@ -65,8 +70,8 @@ public class SelectRaceService {
         var gameTitle = "じゃんけんゲーム";
         var description = String.format(
                 """
-                %s: 通常選択可能 %s: 1回勝利で選択可能, %s: 2回連続勝利で選択可能, %s: 3回連続勝利で選択可能
-                """,
+                        %s: 通常選択可能 %s: 1回勝利で選択可能, %s: 2回連続勝利で選択可能, %s: 3回連続勝利で選択可能
+                        """,
                 STANDARD.name(),
                 UNIQUE.name(),
                 LEGENDARY.name(),
@@ -78,7 +83,7 @@ public class SelectRaceService {
 
         // じゃんけんゲームを実行し、結果をRaceRarityに変換
         return rockPaperScissorsGame.playGameAndConvertResult(
-                scanner, 
+                scanner,
                 3, // 最大3回まで
                 gameTitle,
                 description,
@@ -138,7 +143,7 @@ public class SelectRaceService {
      * プレイヤーに種族を選択させるプロンプトを表示し、選択を処理します。
      * 有効な選択が行われるまで繰り返し尋ねます。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param scanner        入力を受け付けるScannerオブジェクト
      * @param availableRaces 選択可能な種族リスト
      * @return 選択された種族
      */

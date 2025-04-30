@@ -3,11 +3,10 @@ package com.kos0514.oop_in_java_learn.factory;
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.mapper.RaceStatusModifierMapper;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
-import com.kos0514.oop_in_java_learn.model.world.World;
+import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
-import com.kos0514.oop_in_java_learn.model.value.Age;
-
+import com.kos0514.oop_in_java_learn.model.world.World;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +24,9 @@ public class TransmigratorFactory {
      * 転生者を生成します。
      *
      * @param soulName 転生者の名前を表す値オブジェクト
-     * @param age 転生者の年齢を表す値オブジェクト
-     * @param world 転生先の世界
-     * @param race 転生する種族
+     * @param age      転生者の年齢を表す値オブジェクト
+     * @param world    転生先の世界
+     * @param race     転生する種族
      * @return Transmigrator インスタンス
      */
     public Transmigrator create(SoulName soulName, Age age, World world, Race race) {

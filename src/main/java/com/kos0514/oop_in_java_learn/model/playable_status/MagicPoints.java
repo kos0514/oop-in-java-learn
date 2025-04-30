@@ -4,13 +4,13 @@ package com.kos0514.oop_in_java_learn.model.playable_status;
  * 魔力値ステータスを表す値オブジェクト
  */
 public class MagicPoints extends PlayableStatus {
-    
+
     private static final String JAPANESE_NAME = "魔力値";
-    
+
     private MagicPoints(int value) {
         super(value, JAPANESE_NAME);
     }
-    
+
     /**
      * 整数値から魔力値の値オブジェクトを生成します
      *

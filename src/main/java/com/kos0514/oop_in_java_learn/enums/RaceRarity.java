@@ -29,11 +29,11 @@ public enum RaceRarity {
     SECRET(3, "ウルトラレア");
 
     /**
-     *  希少度の種族を選択するために必要なじゃんけんの勝利回数
+     * 希少度の種族を選択するために必要なじゃんけんの勝利回数
      */
     private final int requiredWins;
     /**
-     *  希少度の日本語表記
+     * 希少度の日本語表記
      */
     private final String japaneseDescription;
 

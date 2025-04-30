@@ -7,12 +7,14 @@ package com.kos0514.oop_in_java_learn.model.world;
 public interface World {
     /**
      * 世界の名前を取得します。
+     *
      * @return 世界の名前
      */
     String getName();
 
     /**
      * 世界の説明を取得します。
+     *
      * @return 世界の説明
      */
     String getDescription();

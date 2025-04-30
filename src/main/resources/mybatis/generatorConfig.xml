@@ -5,12 +5,12 @@
 
 <generatorConfiguration>
     <context id="MySQLTables" targetRuntime="MyBatis3DynamicSql">
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
-        
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
         <commentGenerator>
-            <property name="suppressDate" value="true" />
-            <property name="addRemarkComments" value="true" />
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
         </commentGenerator>
 
         <!-- データベース接続設定 -->
@@ -18,30 +18,31 @@
                         connectionURL="jdbc:mysql://localhost:3306/transmigration"
                         userId="user"
                         password="password">
-            <property name="nullCatalogMeansCurrent" value="true" />
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <!-- Java モデル生成設定 -->
         <javaModelGenerator targetPackage="com.kos0514.oop_in_java_learn.entity.generated"
                             targetProject="src/main/java">
-            <property name="immutable" value="true" />
-            <property name="enableSubPackages" value="true" />
-            <property name="trimStrings" value="true" />
+            <property name="immutable" value="true"/>
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- マッパー生成設定 -->
         <javaClientGenerator type="ANNOTATEDMAPPER"
                              targetPackage="com.kos0514.oop_in_java_learn.mapper.generated"
                              targetProject="src/main/java">
-            <property name="enableSubPackages" value="true" />
+            <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- テーブル設定 -->
         <table tableName="races" domainObjectName="Race" mapperName="RaceGeneratedMapper">
-            <generatedKey column="id" sqlStatement="JDBC" identity="false" />
+            <generatedKey column="id" sqlStatement="JDBC" identity="false"/>
         </table>
-        <table tableName="race_status_modifiers" domainObjectName="RaceStatusModifier" mapperName="RaceStatusModifierGeneratedMapper">
-            <generatedKey column="race_id" sqlStatement="JDBC" identity="false" />
+        <table tableName="race_status_modifiers" domainObjectName="RaceStatusModifier"
+               mapperName="RaceStatusModifierGeneratedMapper">
+            <generatedKey column="race_id" sqlStatement="JDBC" identity="false"/>
         </table>
     </context>
 </generatorConfiguration>

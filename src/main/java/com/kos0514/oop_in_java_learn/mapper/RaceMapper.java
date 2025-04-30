@@ -9,11 +9,11 @@ import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
 
 import java.util.List;
 
-import static com.kos0514.oop_in_java_learn.mapper.generated.RaceDynamicSqlSupport.rarity;
-import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
-import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
+import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
+import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
+import static com.kos0514.oop_in_java_learn.mapper.generated.RaceDynamicSqlSupport.rarity;
 
 @Mapper
 public interface RaceMapper extends RaceGeneratedMapper {
@@ -28,9 +28,9 @@ public interface RaceMapper extends RaceGeneratedMapper {
         // 希少度の順序に基づいて、指定された希少度以下の種族を取得
         String[] rarityLevels = getRarityLevelsUpTo(maxRarityLevel);
 
-        SelectDSLCompleter completer = c -> 
-            c.where(rarity, SqlBuilder.isIn(rarityLevels))
-             .orderBy(rarity);
+        SelectDSLCompleter completer = c ->
+                c.where(rarity, SqlBuilder.isIn(rarityLevels))
+                        .orderBy(rarity);
         return select(completer);
     }
 

@@ -4,13 +4,13 @@ package com.kos0514.oop_in_java_learn.model.playable_status;
  * 体力値ステータスを表す値オブジェクト
  */
 public class HealthPoints extends PlayableStatus {
-    
+
     private static final String JAPANESE_NAME = "体力値";
-    
+
     private HealthPoints(int value) {
         super(value, JAPANESE_NAME);
     }
-    
+
     /**
      * 整数値から体力値の値オブジェクトを生成します
      *

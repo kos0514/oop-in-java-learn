@@ -14,12 +14,12 @@ abstract class PlayableStatus {
      * プレイヤーステータス値
      */
     private final int value;
-    
+
     /**
      * プレイヤーステータスの日本語名
      */
     private final String japaneseName;
-    
+
     /**
      * プレイヤーステータスの最小値（デフォルトは1）
      */
@@ -27,8 +27,8 @@ abstract class PlayableStatus {
 
     /**
      * プレイヤーステータス値の妥当性を検証する
-     * 
-     * @param value 検証する値
+     *
+     * @param value        検証する値
      * @param japaneseName プレイヤーステータスの日本語名
      * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
      */

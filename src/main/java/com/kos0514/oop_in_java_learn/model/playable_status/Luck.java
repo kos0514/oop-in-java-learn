@@ -4,13 +4,13 @@ package com.kos0514.oop_in_java_learn.model.playable_status;
  * 運ステータスを表す値オブジェクト
  */
 public class Luck extends PlayableStatus {
-    
+
     private static final String JAPANESE_NAME = "運";
-    
+
     private Luck(int value) {
         super(value, JAPANESE_NAME);
     }
-    
+
     /**
      * 整数値から運の値オブジェクトを生成します
      *

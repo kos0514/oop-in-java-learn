@@ -4,13 +4,13 @@ package com.kos0514.oop_in_java_learn.model.playable_status;
  * 器用さのステータスを表す値オブジェクト
  */
 public class Dexterity extends PlayableStatus {
-    
+
     private static final String JAPANESE_NAME = "器用さ";
-    
+
     private Dexterity(int value) {
         super(value, JAPANESE_NAME);
     }
-    
+
     /**
      * 整数値から器用さの値オブジェクトを生成します
      *

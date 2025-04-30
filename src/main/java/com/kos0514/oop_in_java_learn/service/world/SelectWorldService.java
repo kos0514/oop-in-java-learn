@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 
 /**
  * 転生先の世界選択を管理するサービスクラス。

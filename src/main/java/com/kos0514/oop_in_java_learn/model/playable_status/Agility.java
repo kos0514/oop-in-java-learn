@@ -4,13 +4,13 @@ package com.kos0514.oop_in_java_learn.model.playable_status;
  * 敏捷性ステータスを表す値オブジェクト
  */
 public class Agility extends PlayableStatus {
-    
+
     private static final String JAPANESE_NAME = "敏捷性";
-    
+
     private Agility(int value) {
         super(value, JAPANESE_NAME);
     }
-    
+
     /**
      * 整数値から敏捷性の値オブジェクトを生成します
      *

@@ -1,18 +1,19 @@
 package com.kos0514.oop_in_java_learn.service;
 
+import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
+import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.service.race.SelectRaceService;
 import com.kos0514.oop_in_java_learn.service.world.SelectWorldService;
-import org.springframework.stereotype.Service;
-import com.kos0514.oop_in_java_learn.model.Transmigrator;
-import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
 
 /**
  * 異世界転生プロセスを管理するサービスクラス。

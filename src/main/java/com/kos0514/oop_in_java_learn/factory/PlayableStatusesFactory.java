@@ -17,8 +17,8 @@ public class PlayableStatusesFactory {
     /**
      * 年齢、SoulId、および種族修正値に基づいてステータスを生成します。
      *
-     * @param age 転生者の年齢
-     * @param soulId 転生者の魂ID（ランダム要素の生成に使用）
+     * @param age                転生者の年齢
+     * @param soulId             転生者の魂ID（ランダム要素の生成に使用）
      * @param raceStatusModifier 種族のステータス修正値
      * @return 年齢、SoulId、および種族に基づいて調整された基礎ステータスの値オブジェクト
      */
@@ -44,7 +44,7 @@ public class PlayableStatusesFactory {
     /**
      * 年齢とSoulIdに基づいた基礎ステータスを生成します
      *
-     * @param age 転生者の年齢
+     * @param age    転生者の年齢
      * @param soulId 転生者の魂ID（ランダム要素の生成に使用）
      * @return 年齢とSoulIdに基づいて調整された基礎ステータスの値オブジェクト
      */
