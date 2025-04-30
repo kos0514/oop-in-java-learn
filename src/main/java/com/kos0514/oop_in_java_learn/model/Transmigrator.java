@@ -6,6 +6,9 @@ import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.world.World;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 /**
@@ -18,6 +21,8 @@ import lombok.Value;
  * </p>
  */
 @Value
+@Builder
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Transmigrator {
     /**
      * 魂ID
@@ -47,5 +52,5 @@ public class Transmigrator {
     /**
      * 基礎ステータス
      */
-    PlayableStatuses parameters;
+    PlayableStatuses playableStatuses;
 }

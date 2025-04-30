@@ -134,7 +134,7 @@ public class TransmigrationService {
      * @param transmigrator 転生者オブジェクト
      */
     private void displayTransmigratorParameters(Transmigrator transmigrator) {
-        var params = transmigrator.getParameters();
+        var params = transmigrator.getPlayableStatuses();
         printSeparator();
         log.info("【基礎ステータス】");
         log.info("STR: {}", params.getStrength().getValue());
