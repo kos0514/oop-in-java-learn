@@ -4,7 +4,6 @@ import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.mapper.RaceStatusModifierMapper;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.world.World;
-import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.value.Age;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class TransmigratorFactory {
 
     private final RaceStatusModifierMapper raceStatusModifierMapper;
+    private final PlayableStatusesFactory playableStatusesFactory;
 
     /**
      * 転生者を生成します。
@@ -30,7 +30,7 @@ public class TransmigratorFactory {
      * @param race 転生する種族
      * @return Transmigrator インスタンス
      */
-    public Transmigrator createTransmigrator(SoulName soulName, Age age, World world, Race race) {
+    public Transmigrator create(SoulName soulName, Age age, World world, Race race) {
         // 魂IDを先に生成して、基礎ステータス生成に使用する
         var soulId = SoulId.newId();
 
@@ -38,7 +38,7 @@ public class TransmigratorFactory {
         var raceParameterModifier = raceStatusModifierMapper.selectByPrimaryKey(race.getId()).orElse(null);
 
         // 転生者のステータス値を生成
-        var playableStatuses = PlayableStatuses.generateFrom(age, soulId, raceParameterModifier);
+        var playableStatuses = playableStatusesFactory.create(age, soulId, raceParameterModifier);
 
         return Transmigrator.builder()
                 .soulId(soulId)

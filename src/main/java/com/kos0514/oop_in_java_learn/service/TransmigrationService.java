@@ -58,7 +58,7 @@ public class TransmigrationService {
             var selectedRace = selectRaceService.selectRace(scanner);
 
             // ファクトリーメソッドで転生者を作成
-            var transmigrator = transmigratorFactory.createTransmigrator(soulName, age, selectedWorld, selectedRace);
+            var transmigrator = transmigratorFactory.create(soulName, age, selectedWorld, selectedRace);
 
             // 転生の実行
             executeTransmigration(transmigrator);
