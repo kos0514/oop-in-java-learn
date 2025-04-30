@@ -4,16 +4,15 @@ import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.service.race.SelectRaceService;
 import com.kos0514.oop_in_java_learn.service.world.SelectWorldService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
 
 import lombok.RequiredArgsConstructor;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-
 import java.util.Scanner;
+
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
 
 /**
  * 異世界転生プロセスを管理するサービスクラス。
@@ -26,7 +25,6 @@ import java.util.Scanner;
  * @author kos0514
  * @version 1.0
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransmigrationService {
@@ -41,9 +39,9 @@ public class TransmigrationService {
      * 獲得するスキルなどを設定し、転生処理を完了します。
      */
     public void startTransmigrationProcess() {
-        log.info("転生プロセスを開始します...");
+        info("転生プロセスを開始します...");
         printSeparator();
-        log.info("    異世界転生トランスミッションサービス");
+        info("    異世界転生トランスミッションサービス");
         printSeparator();
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -63,13 +61,8 @@ public class TransmigrationService {
             // 転生の実行
             executeTransmigration(transmigrator);
 
-            log.info("転生が完了しました！");
-            log.info("名前: {}", transmigrator.getSoulName().getName());
-            log.info("転生先: {}", transmigrator.getWorld().getName());
-            log.info("種族: {}", transmigrator.getRace().getJapaneseName());
-
             // 基礎ステータスの表示
-            displayTransmigratorParameters(transmigrator);
+            transmigrator.getPlayableStatuses().showStatus();
         }
     }
 
@@ -83,11 +76,11 @@ public class TransmigrationService {
         SoulName soulName = null;
         while (soulName == null) {
             try {
-                log.info("転生者の名前を入力してください:");
+                info("転生者の名前を入力してください:");
                 var name = scanner.nextLine();
                 soulName = SoulName.of(name);
             } catch (IllegalArgumentException e) {
-                log.warn(e.getMessage());
+                warn(e.getMessage());
             }
         }
         return soulName;
@@ -103,10 +96,10 @@ public class TransmigrationService {
         Age age = null;
         while (age == null) {
             try {
-                log.info("転生者の年齢を入力してください (1～120の整数):");
+                info("転生者の年齢を入力してください (1～120の整数):");
                 age = Age.fromString(scanner.nextLine());
             } catch (IllegalArgumentException e) {
-                log.warn(e.getMessage());
+                warn(e.getMessage());
             }
         }
         return age;
@@ -123,28 +116,7 @@ public class TransmigrationService {
         var worldName = transmigrator.getWorld().getName();
         var raceName = transmigrator.getRace().getJapaneseName();
 
-        log.info("{}さんの転生を実行しています...", name);
-        log.info("転生完了: 「{}」さんは、「{}」の「{}」種族に転生しました！", name, worldName, raceName);
-    }
-
-
-    /**
-     * 転生者の基礎ステータスを表示します。
-     *
-     * @param transmigrator 転生者オブジェクト
-     */
-    private void displayTransmigratorParameters(Transmigrator transmigrator) {
-        var params = transmigrator.getPlayableStatuses();
-        printSeparator();
-        log.info("【基礎ステータス】");
-        log.info("STR: {}", params.getStrength().getValue());
-        log.info("VIT: {}", params.getVitality().getValue());
-        log.info("INT: {}", params.getIntelligence().getValue());
-        log.info("AGI: {}", params.getAgility().getValue());
-        log.info("DEX: {}", params.getDexterity().getValue());
-        log.info("LUC: {}", params.getLuck().getValue());
-        log.info("HP: {}", params.getHealthPoints().getValue());
-        log.info("MP: {}", params.getMagicPoints().getValue());
-        printSeparator();
+        info("{}さんの転生を実行しています...", name);
+        info("転生完了: 「{}」さんは、「{}」の「{}」種族に転生しました！", name, worldName, raceName);
     }
 }

@@ -1,10 +1,11 @@
 package com.kos0514.oop_in_java_learn;
 
 import com.kos0514.oop_in_java_learn.service.TransmigrationService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
 
 /**
  * 異世界転生サービスのメインアプリケーションクラス。
@@ -17,7 +18,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author kos0514
  * @version 1.0
  */
-@Slf4j
 @SpringBootApplication
 public class OopInJavaLearnApplication implements CommandLineRunner {
 
@@ -49,9 +49,9 @@ public class OopInJavaLearnApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... args) {
-		log.info("========================================");
-		log.info("異世界転生トランスミッションサービスへようこそ！");
-		log.info("========================================");
+		startPrintSeparator();
+		info("異世界転生トランスミッションサービスへようこそ！");
+		endPrintSeparator();
 
 		transmigrationService.startTransmigrationProcess();
 		System.exit(0);

@@ -11,10 +11,49 @@ import lombok.extern.slf4j.Slf4j;
 public class LoggingUtils {
 
     /**
+     * 一般的な情報ログを出力します。
+     *
+     * @param message 出力するメッセージ
+     */
+    public static void info(String message) {
+        log.info(message);
+    }
+
+    /**
+     * 一般的な情報ログを出力します（フォーマット対応）。
+     *
+     * @param format フォーマット文字列
+     * @param args   フォーマット内のプレースホルダに対応する引数
+     */
+    public static void info(String format, Object... args) {
+        log.info(format, args);
+    }
+
+    /**
+     * 警告ログを出力します。
+     *
+     * @param message 出力するメッセージ
+     */
+    public static void warn(String message) {
+        log.warn(message);
+    }
+
+    /**
+     * 警告ログを出力します（フォーマット対応）。
+     *
+     * @param format フォーマット文字列
+     * @param args   フォーマット内のプレースホルダに対応する引数
+     */
+    public static void warn(String format, Object... args) {
+        log.warn(format, args);
+    }
+
+
+    /**
      * 転生プロセスのセパレーターを表示します。
      */
     public static void printSeparator() {
-        log.info("======================================");
+        info("======================================");
     }
 
     /**
@@ -23,7 +62,7 @@ public class LoggingUtils {
      * セクションの開始部分で呼び出すことを想定しています。
      */
     public static void startPrintSeparator() {
-        log.info("");
+        info("");
         printSeparator();
     }
 
@@ -34,7 +73,7 @@ public class LoggingUtils {
      */
     public static void endPrintSeparator() {
         printSeparator();
-        log.info("");
+        info("");
     }
 
     /**
@@ -42,6 +81,6 @@ public class LoggingUtils {
      * 入力検証のエラーハンドリングで使用することを想定しています。
      */
     public static void warnInputNumber() {
-        log.warn("数値を入力してください。");
+        warn("数値を入力してください。");
     }
 }

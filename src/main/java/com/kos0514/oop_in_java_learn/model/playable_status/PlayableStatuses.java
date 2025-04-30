@@ -1,8 +1,12 @@
 package com.kos0514.oop_in_java_learn.model.playable_status;
 
+import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
 
 /**
  * 転生者の基礎ステータスを表す値オブジェクト。
@@ -81,5 +85,22 @@ public class PlayableStatuses {
             HealthPoints.of(healthPoints),
             MagicPoints.of(magicPoints)
         );
+    }
+
+    /**
+     * 転生者の基礎ステータスを表示します。
+     */
+    public void showStatus() {
+        printSeparator();
+        info("【基礎ステータス】");
+        info("STR: {}", getStrength().getValue());
+        info("VIT: {}", getVitality().getValue());
+        info("INT: {}", getIntelligence().getValue());
+        info("AGI: {}", getAgility().getValue());
+        info("DEX: {}", getDexterity().getValue());
+        info("LUC: {}", getLuck().getValue());
+        info("HP: {}", getHealthPoints().getValue());
+        info("MP: {}", getMagicPoints().getValue());
+        printSeparator();
     }
 }

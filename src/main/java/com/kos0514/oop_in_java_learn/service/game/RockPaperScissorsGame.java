@@ -1,15 +1,13 @@
 package com.kos0514.oop_in_java_learn.service.game;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.IntFunction;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
 
 /**
  * じゃんけんゲームを実装する汎用的なコンポーネント。
@@ -22,7 +20,6 @@ import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
  *   <li>勝利回数のカウント</li>
  * </ul>
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RockPaperScissorsGame {
@@ -61,24 +58,24 @@ public class RockPaperScissorsGame {
      * @return 勝利回数
      */
     private int play(Scanner scanner, int maxRounds, String gameTitle, String gameDescription) {
-        log.info("【{}】", gameTitle);
-        log.info(gameDescription);
+        info("【{}】", gameTitle);
+        info(gameDescription);
 
         var wins = 0;
 
         // maxRounds回勝つか、プレイヤーがやめる場合ループ終了
         do {
             printSeparator();
-            log.info("【{}回目のじゃんけん】", wins + 1);
+            info("【{}回目のじゃんけん】", wins + 1);
             printSeparator();
 
             if (!playOneRound(scanner)) {
-                log.info("負けてしまいました...");
+                info("負けてしまいました...");
                 return wins; // 負けた時点で早期リターン
             }
 
             wins++;
-            log.info("勝利しました！ 現在{}回勝利", wins);
+            info("勝利しました！ 現在{}回勝利", wins);
 
         } while (wins < maxRounds && askToContinue(scanner));
 
@@ -92,7 +89,7 @@ public class RockPaperScissorsGame {
      * @return 続ける場合はtrue、やめる場合はfalse
      */
     private boolean askToContinue(Scanner scanner) {
-        log.info("続けますか？ (1: はい, 2: いいえ)");
+        info("続けますか？ (1: はい, 2: いいえ)");
         while (true) {
             try {
                 var choice = Integer.parseInt(scanner.nextLine());
@@ -103,7 +100,7 @@ public class RockPaperScissorsGame {
                     case 2 -> {
                         return false;
                     }
-                    default -> log.warn("1か2を入力してください。");
+                    default -> warn("1か2を入力してください。");
                 }
             } catch (NumberFormatException e) {
                 warnInputNumber();
@@ -120,10 +117,10 @@ public class RockPaperScissorsGame {
      * @return プレイヤーが勝った場合はtrue、負けた場合はfalse
      */
     private boolean playOneRound(Scanner scanner) {
-        log.info("じゃんけんの手を選んでください:");
-        log.info("1: グー");
-        log.info("2: チョキ");
-        log.info("3: パー");
+        info("じゃんけんの手を選んでください:");
+        info("1: グー");
+        info("2: チョキ");
+        info("3: パー");
 
         var playerChoice = getPlayerChoice(scanner);
 
@@ -131,12 +128,12 @@ public class RockPaperScissorsGame {
         var computerChoice = random.nextInt(3) + 1;
 
         var hands = new String[]{"", "グー", "チョキ", "パー"};
-        log.info("あなた: {}", hands[playerChoice]);
-        log.info("相手: {}", hands[computerChoice]);
+        info("あなた: {}", hands[playerChoice]);
+        info("相手: {}", hands[computerChoice]);
 
         // 勝敗判定
         if (playerChoice == computerChoice) {
-            log.info("あいこです。もう一度！");
+            info("あいこです。もう一度！");
             return playOneRound(scanner); // 再帰的に再プレイ
         } else return (playerChoice == 1 && computerChoice == 2) ||
                 (playerChoice == 2 && computerChoice == 3) ||
@@ -156,7 +153,7 @@ public class RockPaperScissorsGame {
             try {
                 playerChoice = Integer.parseInt(scanner.nextLine());
                 if (playerChoice < 1 || playerChoice > 3) {
-                    log.warn("1から3の数字を入力してください。");
+                    warn("1から3の数字を入力してください。");
                 }
             } catch (NumberFormatException e) {
                 warnInputNumber();

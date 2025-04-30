@@ -3,20 +3,16 @@ package com.kos0514.oop_in_java_learn.service.world;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.repository.WorldRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
+import static com.kos0514.oop_in_java_learn.util.LoggingUtils.*;
 
 /**
  * 転生先の世界選択を管理するサービスクラス。
  * 利用可能な世界の一覧を表示し、ユーザーに選択させます。
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SelectWorldService {
@@ -33,32 +29,32 @@ public class SelectWorldService {
         var availableWorlds = worldRepository.getAvailableWorlds();
 
         startPrintSeparator();
-        log.info("【転生先世界の選択】");
+        info("【転生先世界の選択】");
 
         // 利用可能な世界の一覧を表示
         for (var i = 0; i < availableWorlds.size(); i++) {
             var world = availableWorlds.get(i);
-            log.info("{}. {}", i + 1, world.getName());
-            log.info("   {}", world.getDescription());
+            info("{}. {}", i + 1, world.getName());
+            info("   {}", world.getDescription());
         }
         endPrintSeparator();
 
         World selectedWorld = null;
         while (selectedWorld == null) {
             try {
-                log.info("番号を入力してください (1-{}):", availableWorlds.size());
+                info("番号を入力してください (1-{}):", availableWorlds.size());
                 var selection = Integer.parseInt(scanner.nextLine());
 
                 if (selection < 1 || selection > availableWorlds.size()) {
-                    log.warn("有効な番号を入力してください (1-{})。", availableWorlds.size());
+                    warn("有効な番号を入力してください (1-{})。", availableWorlds.size());
                     continue; // 条件に合わない場合は次のループへ
                 }
 
                 selectedWorld = availableWorlds.get(selection - 1);
                 startPrintSeparator();
-                log.info("{}に転生が決定しました！", selectedWorld.getName());
-                log.info("【世界の説明】");
-                log.info("{}", selectedWorld.getDescription());
+                info("{}に転生が決定しました！", selectedWorld.getName());
+                info("【世界の説明】");
+                info("{}", selectedWorld.getDescription());
                 endPrintSeparator();
             } catch (NumberFormatException e) {
                 warnInputNumber();
