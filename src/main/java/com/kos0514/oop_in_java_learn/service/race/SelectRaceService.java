@@ -115,9 +115,9 @@ public class SelectRaceService {
     private RaceRarity logAndYield(RaceRarity rarity) {
         if (rarity == STANDARD) {
             info("{}の種族のみ選択可能です。", rarity.name());
-        } else {
-            info("{}までの種族が選択可能になりました！", rarity.name());
+            return rarity;
         }
+        info("{}までの種族が選択可能になりました！", rarity.name());
         return rarity;
     }
 

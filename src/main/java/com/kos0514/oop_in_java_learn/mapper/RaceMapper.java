@@ -26,7 +26,7 @@ public interface RaceMapper extends RaceGeneratedMapper {
      */
     default List<Race> selectUpToRarity(RaceRarity maxRarityLevel) {
         // 希少度の順序に基づいて、指定された希少度以下の種族を取得
-        String[] rarityLevels = getRarityLevelsUpTo(maxRarityLevel);
+        var rarityLevels = getRarityLevelsUpTo(maxRarityLevel);
 
         SelectDSLCompleter completer = c ->
                 c.where(rarity, SqlBuilder.isIn(rarityLevels))
