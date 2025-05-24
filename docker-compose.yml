@@ -16,6 +16,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql/init.sql:/db-init/init.sql
+      - ./mysql/create_test_schema.sql:/db-init/create_test_schema.sql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
 
