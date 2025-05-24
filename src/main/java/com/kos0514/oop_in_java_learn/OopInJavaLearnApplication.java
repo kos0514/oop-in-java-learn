@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn;
 
 import com.kos0514.oop_in_java_learn.service.TransmigrationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,7 @@ import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparato
  * @version 1.0
  */
 @SpringBootApplication
+@RequiredArgsConstructor
 public class OopInJavaLearnApplication implements CommandLineRunner {
 
     /**
@@ -28,10 +30,6 @@ public class OopInJavaLearnApplication implements CommandLineRunner {
      * 依存性注入によって自動的に初期化されます。
      */
     private final TransmigrationService transmigrationService;
-
-    public OopInJavaLearnApplication(TransmigrationService transmigrationService) {
-        this.transmigrationService = transmigrationService;
-    }
 
     /**
      * アプリケーションのエントリーポイント。
