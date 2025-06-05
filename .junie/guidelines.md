@@ -119,12 +119,12 @@ oop-in-java-learn/
 @Service
 @RequiredArgsConstructor  // Lombokを使用してコンストラクタを自動生成
 public class TransmigrationService {
-    
+
     // finalフィールドで必須依存関係を宣言
     private final TransmigratorFactory transmigratorFactory;
     private final SelectWorldService selectWorldService;
     private final SelectRaceService selectRaceService;
-    
+
     // 単一コンストラクタの場合、@Autowiredアノテーションは不要
 }
 ```
@@ -141,7 +141,7 @@ public class TransmigrationService {
 @Service
 @RequiredArgsConstructor
 class TransmigrationService {  // publicではなくpackage-private
-    
+
     void startTransmigrationProcess() {  // package-private
         // 実装
     }
@@ -149,7 +149,7 @@ class TransmigrationService {  // publicではなくpackage-private
 
 @Repository  
 class WorldRepository {  // package-private
-    
+
     List<World> getAvailableWorlds() {  // package-private
         return List.of(
             new FantasyWorld(),
@@ -169,32 +169,32 @@ class WorldRepository {  // package-private
 @ConfigurationProperties(prefix = "transmigration")
 @Validated
 public record TransmigrationProperties(
-    
+
     @NotNull
     @Valid
     Database database,
-    
+
     @NotNull
     @Valid  
     Game game
 ) {
-    
+
     public record Database(
         @NotBlank
         String url,
-        
+
         @NotBlank
         String username,
-        
+
         @NotBlank
         String password
     ) {}
-    
+
     public record Game(
         @Min(1)
         @Max(10)
         int maxRockPaperScissorsRounds,
-        
+
         @NotNull
         @Size(min = 1)
         List<String> availableWorlds
@@ -230,15 +230,15 @@ transmigration:
 @RequiredArgsConstructor
 @Transactional(readOnly = true)  // クラスレベルでreadOnlyを設定
 public class TransmigrationService {
-    
+
     private final TransmigratorFactory transmigratorFactory;
-    
+
     // 読み取り専用メソッド（クラスレベルの設定を継承）
     public Transmigrator findTransmigratorById(SoulId soulId) {
         return transmigratorRepository.findById(soulId)
             .orElseThrow(() -> new TransmigratorNotFoundException(soulId));
     }
-    
+
     // データ変更メソッドには明示的に@Transactionalを設定
     @Transactional
     public Transmigrator createTransmigrator(SoulName soulName, Age age, World world, Race race) {
@@ -260,7 +260,7 @@ public class TransmigrationService {
 // ❌ 悪い例 - エンティティを直接公開
 @RestController
 class TransmigratorController {
-    
+
     @GetMapping("/transmigrators/{id}")
     public Transmigrator getTransmigrator(@PathVariable String id) {
         return transmigratorService.findById(SoulId.of(id));
@@ -270,7 +270,7 @@ class TransmigratorController {
 // ✅ 良い例 - 専用のDTOレコードを使用
 @RestController
 class TransmigratorController {
-    
+
     @GetMapping("/transmigrators/{id}")
     public TransmigratorResponse getTransmigrator(@PathVariable String id) {
         var transmigrator = transmigratorService.findById(SoulId.of(id));
@@ -316,31 +316,31 @@ public record TransmigratorResponse(
 @RestController
 @RequestMapping("/api/v1")  // バージョン管理されたリソース指向URL
 class TransmigratorController {
-    
+
     // コレクションリソース
     @GetMapping("/transmigrators")
     public ResponseEntity<PagedResponse<TransmigratorResponse>> getTransmigrators(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        
+
         var pagedResult = transmigratorService.findAll(page, size);
         return ResponseEntity.ok(PagedResponse.from(pagedResult));
     }
-    
+
     // 個別リソース
     @GetMapping("/transmigrators/{id}")
     public ResponseEntity<TransmigratorResponse> getTransmigrator(@PathVariable String id) {
         var transmigrator = transmigratorService.findById(SoulId.of(id));
         return ResponseEntity.ok(TransmigratorResponse.from(transmigrator));
     }
-    
+
     // サブリソース
     @GetMapping("/transmigrators/{id}/statuses")
     public ResponseEntity<PlayableStatusesResponse> getTransmigratorStatuses(@PathVariable String id) {
         var statuses = transmigratorService.getStatuses(SoulId.of(id));
         return ResponseEntity.ok(PlayableStatusesResponse.from(statuses));
     }
-    
+
     // 作成
     @PostMapping("/transmigrators")
     public ResponseEntity<TransmigratorResponse> createTransmigrator(@Valid @RequestBody TransmigratorRequest request) {
@@ -381,7 +381,7 @@ public record UpdateTransmigratorStatusCommand(
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TransmigrationService {
-    
+
     @Transactional
     public Transmigrator createTransmigrator(CreateTransmigratorCommand command) {
         var soulName = SoulName.of(command.soulName());
@@ -390,7 +390,7 @@ public class TransmigrationService {
             .orElseThrow(() -> new WorldNotFoundException(command.worldId()));
         var race = raceMapper.selectByPrimaryKey(command.raceId())
             .orElseThrow(() -> new RaceNotFoundException(command.raceId()));
-            
+
         return transmigratorFactory.create(soulName, age, world, race);
     }
 }
@@ -404,43 +404,43 @@ public class TransmigrationService {
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    
+
     @ExceptionHandler(TransmigratorNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleTransmigratorNotFound(TransmigratorNotFoundException ex) {
         log.warn("Transmigrator not found: {}", ex.getMessage());
-        
+
         var errorResponse = new ErrorResponse(
             "TRANSMIGRATOR_NOT_FOUND",
             ex.getMessage(),
             Instant.now()
         );
-        
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
-    
+
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorResponse> handleValidation(ValidationException ex) {
         log.warn("Validation error: {}", ex.getMessage());
-        
+
         var errorResponse = new ErrorResponse(
             "VALIDATION_ERROR",
             ex.getMessage(),
             Instant.now()
         );
-        
+
         return ResponseEntity.badRequest().body(errorResponse);
     }
-    
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
         log.error("Unexpected error occurred", ex);
-        
+
         var errorResponse = new ErrorResponse(
             "INTERNAL_SERVER_ERROR",
             "予期しないエラーが発生しました",
             Instant.now()
         );
-        
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
@@ -481,17 +481,17 @@ management:
 @Component
 @RequiredArgsConstructor
 public class MessageService {
-    
+
     private final MessageSource messageSource;
-    
+
     public String getMessage(String key, Object... args) {
         return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
-    
+
     public String getTransmigrationWelcomeMessage() {
         return getMessage("transmigration.welcome.message");
     }
-    
+
     public String getWorldSelectionPrompt() {
         return getMessage("world.selection.prompt");
     }
@@ -518,20 +518,20 @@ race.selection.prompt=Please select your race
 @SpringBootTest
 @Testcontainers
 class TransmigrationServiceIntegrationTest {
-    
+
     @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("transmigration_test")
             .withUsername("test_user")
             .withPassword("test_password");
-    
+
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", mysql::getJdbcUrl);
         registry.add("spring.datasource.username", mysql::getUsername);
         registry.add("spring.datasource.password", mysql::getPassword);
     }
-    
+
     @Test
     void shouldCreateTransmigratorSuccessfully() {
         // テスト実装
@@ -546,18 +546,18 @@ class TransmigrationServiceIntegrationTest {
 ```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TransmigratorControllerIntegrationTest {
-    
+
     @Autowired
     private TestRestTemplate restTemplate;
-    
+
     @LocalServerPort
     private int port;
-    
+
     @Test
     void shouldReturnTransmigratorById() {
         var url = "http://localhost:" + port + "/api/v1/transmigrators/123";
         var response = restTemplate.getForEntity(url, TransmigratorResponse.class);
-        
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }
@@ -574,10 +574,10 @@ class TransmigratorControllerIntegrationTest {
 @RequiredArgsConstructor
 @Slf4j  // Lombokのロギングアノテーション
 public class TransmigrationService {
-    
+
     public void startTransmigrationProcess() {
         log.info("転生プロセスを開始します");
-        
+
         try {
             // ビジネスロジック
             log.debug("転生者の基本情報収集が完了しました");
@@ -585,7 +585,7 @@ public class TransmigrationService {
             log.error("転生プロセス中にエラーが発生しました", e);
             throw e;
         }
-        
+
         log.info("転生プロセスが正常に完了しました");
     }
 }
@@ -600,15 +600,15 @@ public class TransmigrationService {
 @RequiredArgsConstructor
 @Slf4j
 public class TransmigrationService {
-    
+
     public Transmigrator createTransmigrator(CreateTransmigratorCommand command) {
         // ❌ 悪い例 - 機密情報がログに出力される可能性
         log.info("Creating transmigrator with command: {}", command);
-        
+
         // ✅ 良い例 - 機密情報を除外
         log.info("Creating transmigrator for soul name: {} at age: {}", 
             command.soulName(), command.age());
-        
+
         // 実装
     }
 }
@@ -623,24 +623,24 @@ public class TransmigrationService {
 @RequiredArgsConstructor
 @Slf4j
 public class PlayableStatusesFactory {
-    
+
     public PlayableStatuses create(Age age, SoulId soulId, RaceStatusModifier raceStatusModifier) {
-        
+
         // レベルチェックを使用した方法
         if (log.isDebugEnabled()) {
             log.debug("Creating statuses for age: {}, soul: {}, race modifier: {}", 
                 age.getValue(), soulId.getId(), computeExpensiveModifierDetails(raceStatusModifier));
         }
-        
+
         // ラムダ式/サプライヤーを使用した方法
         log.atDebug()
             .setMessage("Detailed status calculation: {}")
             .addArgument(() -> computeExpensiveStatusDetails(age, soulId, raceStatusModifier))
             .log();
-        
+
         // 実装
     }
-    
+
     private String computeExpensiveModifierDetails(RaceStatusModifier modifier) {
         // 高コストな計算
         return "expensive calculation result";
@@ -657,7 +657,7 @@ public class PlayableStatusesFactory {
 @Service
 @RequiredArgsConstructor
 public class TransmigrationService {
-    
+
     public void startTransmigrationProcess() {
         // ✅ 良い例 - 型推論可能な場合はvarを使用
         var scanner = new Scanner(System.in);
@@ -665,15 +665,15 @@ public class TransmigrationService {
         var age = collectAge(scanner);
         var selectedWorld = selectWorldService.selectWorld(scanner);
         var selectedRace = selectRaceService.selectRace(scanner);
-        
+
         // ✅ 型推論できない場合は明示的な型宣言
         Optional<Race> raceOptional = raceMapper.selectByPrimaryKey(raceId);
         List<World> availableWorlds = worldRepository.getAvailableWorlds();
-        
+
         var transmigrator = transmigratorFactory.create(soulName, age, selectedWorld, selectedRace);
         executeTransmigration(transmigrator);
     }
-    
+
     private SoulName collectSoulName(Scanner scanner) {
         SoulName soulName = null;
         while (soulName == null) {
@@ -880,7 +880,7 @@ class UserServiceTest {
 
 ## テスト記述ガイドライン
 
-### 1. 変数宣言の原則
+### 変数宣言の原則
 - **基本方針**: 右辺の式から型推論できる場合は`var`を使用すること
 - **例外**: 型推論できない場合は明示的な型宣言を使用
 
@@ -904,7 +904,38 @@ void userExists_returnsUser() {
 }
 ```
 
-### 2. テストの基本構造 (AAA パターン)
+### テストケースの順序
+- **基本方針**: 正常系のテストケースを先に全て記述し、その後に異常系のテストケースを記述すること
+- **目的**: テストの可読性と理解しやすさを向上させる
+
+```java
+@Nested
+class FindById {
+    // 正常系のテストケース（先に記述）
+    @Test
+    void userExists_returnsUser() {
+        // 正常系のテスト実装
+    }
+
+    @Test
+    void userWithSpecialPermissions_returnsEnhancedUser() {
+        // 正常系のテスト実装
+    }
+
+    // 異常系のテストケース（後に記述）
+    @Test
+    void userNotFound_throwsException() {
+        // 異常系のテスト実装
+    }
+
+    @Test
+    void invalidUserId_throwsException() {
+        // 異常系のテスト実装
+    }
+}
+```
+
+### テストの基本構造 (AAA パターン)
 各テストは以下の3つのセクションを明確に区分すること:
 - **Arrange** (準備): テストデータとモックの設定
 - **Act** (実行): テスト対象メソッドの呼び出し
@@ -932,7 +963,7 @@ class FindUserById {
 }
 ```
 
-### 3. スタブとモックの設定と検証
+### スタブとモックの設定と検証
 
 #### スタブの基本設定
 ```java
@@ -987,7 +1018,7 @@ void processUser_validUser_savesAndNotifies() {
 }
 ```
 
-### 4. 例外テスト
+### 例外テスト
 ```java
 @Nested
 class FindById {
@@ -1009,7 +1040,7 @@ class FindById {
 }
 ```
 
-### 5. パラメータ化テスト
+### パラメータ化テスト
 ```java
 @Nested
 class ValidateUserId {
@@ -1251,10 +1282,28 @@ class UserServiceTest {
 ## テストカバレッジの要件
 
 - 各クラスの主要なパブリックメソッドには必ずテストを作成すること
+- プライベートメソッドは直接テストする必要はない（パブリックメソッドを通じて間接的にテストされる）
 - 各メソッドの正常系と異常系の両方をテストすること
 - 境界値のテストを含めること
 - 分岐条件（if文、switch文）のすべてのパスをカバーすること
 - エッジケースと例外ケースを網羅すること
+- 複雑なパブリックメソッド（例：`startTransmigrationProcess`）については、すべての異常系シナリオを含む網羅的なテストケースを作成し、完全なカバレッジを確保すること
+
+## テストファイルの配置
+
+### 基本原則
+- テストクラスは、テスト対象のクラスと同じパッケージ構造に配置する
+- 例: `src/main/java/com/kos0514/oop_in_java_learn/service/TransmigrationService.java` のテストは 
+  `src/test/java/com/kos0514/oop_in_java_learn/service/TransmigrationServiceTest.java` に配置する
+
+### 命名規則
+- テストクラス名は `[テスト対象クラス名]Test` とする
+- 例: `TransmigrationService` のテストクラスは `TransmigrationServiceTest`
+
+### パッケージ宣言
+- テストクラスのパッケージ宣言は、ファイルの配置場所と一致させる
+- 例: `src/test/java/com/kos0514/oop_in_java_learn/service/` に配置されたファイルは
+  `package com.kos0514.oop_in_java_learn.service;` と宣言する
 
 ## ベストプラクティス
 
