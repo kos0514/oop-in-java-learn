@@ -2,13 +2,13 @@ package com.kos0514.oop_in_java_learn.service.race;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.enums.RaceRarity;
+import com.kos0514.oop_in_java_learn.io.UserInputProvider;
 import com.kos0514.oop_in_java_learn.mapper.RaceMapper;
 import com.kos0514.oop_in_java_learn.service.game.RockPaperScissorsGame;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.IntFunction;
 
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
@@ -37,16 +37,16 @@ public class SelectRaceService {
     /**
      * じゃんけんゲームを実行して種族を選択します。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return 選択された種族
      */
-    public Race selectRace(Scanner scanner) {
+    public Race selectRace(UserInputProvider inputProvider) {
         info("【種族選択】");
         info("あなたの種族を決定します。");
         info("希少な種族を選ぶには、じゃんけんに勝つ必要があります。");
 
         // じゃんけんの結果に基づいて利用可能な最大レア度を決定
-        var maxRarity = playRockPaperScissorsForRace(scanner);
+        var maxRarity = playRockPaperScissorsForRace(inputProvider);
 
         // 利用可能な種族のリストを取得
         var availableRaces = raceMapper.selectUpToRarity(maxRarity);
@@ -55,17 +55,17 @@ public class SelectRaceService {
         displayAvailableRaces(availableRaces);
 
         // プレイヤーに種族を選択させる
-        return promptRaceSelection(scanner, availableRaces);
+        return promptRaceSelection(inputProvider, availableRaces);
     }
 
     /**
      * 種族選択のためのじゃんけんゲームを実行します。
      * 勝利回数に応じて選択可能な種族の希少度を決定します。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return 選択可能な最大レア度
      */
-    private RaceRarity playRockPaperScissorsForRace(Scanner scanner) {
+    private RaceRarity playRockPaperScissorsForRace(UserInputProvider inputProvider) {
         // ゲームの説明文を作成
         var gameTitle = "じゃんけんゲーム";
         var description = String.format(
@@ -83,7 +83,7 @@ public class SelectRaceService {
 
         // じゃんけんゲームを実行し、結果をRaceRarityに変換
         return rockPaperScissorsGame.playGameAndConvertResult(
-                scanner,
+                inputProvider,
                 3, // 最大3回まで
                 gameTitle,
                 description,
@@ -143,16 +143,16 @@ public class SelectRaceService {
      * プレイヤーに種族を選択させるプロンプトを表示し、選択を処理します。
      * 有効な選択が行われるまで繰り返し尋ねます。
      *
-     * @param scanner        入力を受け付けるScannerオブジェクト
+     * @param inputProvider  入力を受け付けるUserInputProviderオブジェクト
      * @param availableRaces 選択可能な種族リスト
      * @return 選択された種族
      */
-    private Race promptRaceSelection(Scanner scanner, List<Race> availableRaces) {
+    private Race promptRaceSelection(UserInputProvider inputProvider, List<Race> availableRaces) {
         Race selectedRace = null;
         while (selectedRace == null) {
             try {
                 info("番号を入力してください (1-{}):", availableRaces.size());
-                var selection = Integer.parseInt(scanner.nextLine());
+                var selection = Integer.parseInt(inputProvider.readLine());
 
                 if (selection >= 1 && selection <= availableRaces.size()) {
                     selectedRace = availableRaces.get(selection - 1);

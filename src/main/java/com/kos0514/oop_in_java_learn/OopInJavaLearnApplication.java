@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn;
 
 import com.kos0514.oop_in_java_learn.service.TransmigrationService;
+import com.kos0514.oop_in_java_learn.util.ExitHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +33,12 @@ public class OopInJavaLearnApplication implements CommandLineRunner {
     private final TransmigrationService transmigrationService;
 
     /**
+     * システム終了処理を行うハンドラー。
+     * 依存性注入によって自動的に初期化されます。
+     */
+    private final ExitHandler exitHandler;
+
+    /**
      * アプリケーションのエントリーポイント。
      * Spring Bootアプリケーションを起動します。
      *
@@ -54,6 +61,6 @@ public class OopInJavaLearnApplication implements CommandLineRunner {
         endPrintSeparator();
 
         transmigrationService.startTransmigrationProcess();
-        System.exit(0);
+        exitHandler.exit();
     }
 }

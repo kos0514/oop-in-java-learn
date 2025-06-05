@@ -1,10 +1,10 @@
 package com.kos0514.oop_in_java_learn.service.game;
 
+import com.kos0514.oop_in_java_learn.io.UserInputProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
-import java.util.Scanner;
 import java.util.function.IntFunction;
 
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
@@ -33,7 +33,7 @@ public class RockPaperScissorsGame {
      * 特定の条件に基づいてじゃんけんゲームを実行し、結果を変換して返します。
      *
      * @param <T>               戻り値の型
-     * @param scanner           入力を受け付けるScannerオブジェクト
+     * @param inputProvider     入力を受け付けるUserInputProviderオブジェクト
      * @param maxRounds         最大ラウンド数
      * @param gameTitle         ゲームのタイトル（ログ表示用）
      * @param gameDescription   ゲームの説明（ログ表示用）
@@ -41,26 +41,26 @@ public class RockPaperScissorsGame {
      * @return 変換された結果
      */
     public <T> T playGameAndConvertResult(
-            Scanner scanner,
+            UserInputProvider inputProvider,
             int maxRounds,
             String gameTitle,
             String gameDescription,
             IntFunction<T> winCountConverter) {
 
-        var wins = play(scanner, maxRounds, gameTitle, gameDescription);
+        var wins = play(inputProvider, maxRounds, gameTitle, gameDescription);
         return winCountConverter.apply(wins);
     }
 
     /**
      * じゃんけんゲームを実行し、勝利回数を返します。
      *
-     * @param scanner         入力を受け付けるScannerオブジェクト
+     * @param inputProvider   入力を受け付けるUserInputProviderオブジェクト
      * @param maxRounds       最大ラウンド数
      * @param gameTitle       ゲームのタイトル（ログ表示用）
      * @param gameDescription ゲームの説明（ログ表示用）
      * @return 勝利回数
      */
-    private int play(Scanner scanner, int maxRounds, String gameTitle, String gameDescription) {
+    private int play(UserInputProvider inputProvider, int maxRounds, String gameTitle, String gameDescription) {
         info("【{}】", gameTitle);
         info(gameDescription);
 
@@ -72,7 +72,7 @@ public class RockPaperScissorsGame {
             info("【{}回目のじゃんけん】", wins + 1);
             printSeparator();
 
-            if (!playOneRound(scanner)) {
+            if (!playOneRound(inputProvider)) {
                 info("負けてしまいました...");
                 return wins; // 負けた時点で早期リターン
             }
@@ -80,7 +80,7 @@ public class RockPaperScissorsGame {
             wins++;
             info("勝利しました！ 現在{}回勝利", wins);
 
-        } while (wins < maxRounds && askToContinue(scanner));
+        } while (wins < maxRounds && askToContinue(inputProvider));
 
         return wins;
     }
@@ -88,14 +88,14 @@ public class RockPaperScissorsGame {
     /**
      * プレイヤーにゲームを続けるかどうか尋ねます。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return 続ける場合はtrue、やめる場合はfalse
      */
-    private boolean askToContinue(Scanner scanner) {
+    private boolean askToContinue(UserInputProvider inputProvider) {
         info("続けますか？ (1: はい, 2: いいえ)");
         while (true) {
             try {
-                var choice = Integer.parseInt(scanner.nextLine());
+                var choice = Integer.parseInt(inputProvider.readLine());
                 switch (choice) {
                     case 1 -> {
                         return true;
@@ -116,16 +116,16 @@ public class RockPaperScissorsGame {
      * プレイヤーとコンピュータの手を比較し、勝敗を判定します。
      * あいこの場合は再帰的に再プレイします。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return プレイヤーが勝った場合はtrue、負けた場合はfalse
      */
-    private boolean playOneRound(Scanner scanner) {
+    private boolean playOneRound(UserInputProvider inputProvider) {
         info("じゃんけんの手を選んでください:");
         info("1: グー");
         info("2: チョキ");
         info("3: パー");
 
-        var playerChoice = getPlayerChoice(scanner);
+        var playerChoice = getPlayerChoice(inputProvider);
 
         // コンピュータの手をランダムに選択 (1: グー, 2: チョキ, 3: パー)
         var computerChoice = random.nextInt(3) + 1;
@@ -137,7 +137,7 @@ public class RockPaperScissorsGame {
         // 勝敗判定
         if (playerChoice == computerChoice) {
             info("あいこです。もう一度！");
-            return playOneRound(scanner); // 再帰的に再プレイ
+            return playOneRound(inputProvider); // 再帰的に再プレイ
         } else return (playerChoice == 1 && computerChoice == 2) ||
                 (playerChoice == 2 && computerChoice == 3) ||
                 (playerChoice == 3 && computerChoice == 1); // プレイヤーの勝ち
@@ -147,14 +147,14 @@ public class RockPaperScissorsGame {
      * プレイヤーの手の選択を取得します。
      * 有効な選択（1-3）が入力されるまで繰り返し尋ねます。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return プレイヤーの選択（1: グー, 2: チョキ, 3: パー）
      */
-    private int getPlayerChoice(Scanner scanner) {
+    private int getPlayerChoice(UserInputProvider inputProvider) {
         var playerChoice = 0;
         while (playerChoice < 1 || playerChoice > 3) {
             try {
-                playerChoice = Integer.parseInt(scanner.nextLine());
+                playerChoice = Integer.parseInt(inputProvider.readLine());
                 if (playerChoice < 1 || playerChoice > 3) {
                     warn("1から3の数字を入力してください。");
                 }

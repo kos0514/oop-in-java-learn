@@ -1,11 +1,10 @@
 package com.kos0514.oop_in_java_learn.service.world;
 
+import com.kos0514.oop_in_java_learn.io.UserInputProvider;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.repository.WorldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Scanner;
 
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
@@ -26,10 +25,10 @@ public class SelectWorldService {
     /**
      * 転生先の世界を選択します。
      *
-     * @param scanner 入力を受け付けるScannerオブジェクト
+     * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
      * @return 選択された世界
      */
-    public World selectWorld(Scanner scanner) {
+    public World selectWorld(UserInputProvider inputProvider) {
         var availableWorlds = worldRepository.getAvailableWorlds();
 
         startPrintSeparator();
@@ -47,7 +46,7 @@ public class SelectWorldService {
         while (selectedWorld == null) {
             try {
                 info("番号を入力してください (1-{}):", availableWorlds.size());
-                var selection = Integer.parseInt(scanner.nextLine());
+                var selection = Integer.parseInt(inputProvider.readLine());
 
                 if (selection < 1 || selection > availableWorlds.size()) {
                     warn("有効な番号を入力してください (1-{})。", availableWorlds.size());
