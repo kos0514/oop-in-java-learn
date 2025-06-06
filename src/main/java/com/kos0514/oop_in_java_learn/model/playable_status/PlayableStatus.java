@@ -33,7 +33,7 @@ abstract class PlayableStatus {
      * @throws IllegalArgumentException 妥当な範囲外の値が指定された場合
      */
     protected static void validateValue(int value, String japaneseName) throws IllegalArgumentException {
-        if (value <= MIN_VALUE) {
+        if (value < MIN_VALUE) {
             throw new IllegalArgumentException(japaneseName + "は" + MIN_VALUE + "以上の値である必要があります");
         }
     }

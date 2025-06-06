@@ -31,4 +31,18 @@ public class SoulId {
     public static SoulId newId() {
         return new SoulId(UUID.randomUUID());
     }
+
+    /**
+     * 指定されたUUIDからSoulIdを生成するファクトリーメソッド
+     *
+     * @param id 魂ID
+     * @return 指定されたUUIDを持つ魂ID
+     * @throws IllegalArgumentException idがnullの場合
+     */
+    public static SoulId of(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("魂IDにnullは指定できません");
+        }
+        return new SoulId(id);
+    }
 }
