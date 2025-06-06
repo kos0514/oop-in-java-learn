@@ -1,10 +1,10 @@
 package com.kos0514.oop_in_java_learn.service.game;
 
+import com.kos0514.oop_in_java_learn.io.ComputerChoiceProvider;
 import com.kos0514.oop_in_java_learn.io.UserInputProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
 import java.util.function.IntFunction;
 
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
@@ -27,7 +27,7 @@ import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
 @RequiredArgsConstructor
 public class RockPaperScissorsGame {
 
-    private final Random random = new Random();
+    private final ComputerChoiceProvider computerChoiceProvider;
 
     /**
      * 特定の条件に基づいてじゃんけんゲームを実行し、結果を変換して返します。
@@ -127,8 +127,8 @@ public class RockPaperScissorsGame {
 
         var playerChoice = getPlayerChoice(inputProvider);
 
-        // コンピュータの手をランダムに選択 (1: グー, 2: チョキ, 3: パー)
-        var computerChoice = random.nextInt(3) + 1;
+        // コンピュータの手を選択 (1: グー, 2: チョキ, 3: パー)
+        var computerChoice = computerChoiceProvider.chooseHand();
 
         var hands = new String[]{"", "グー", "チョキ", "パー"};
         info("あなた: {}", hands[playerChoice]);
