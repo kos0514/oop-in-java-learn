@@ -1,5 +1,6 @@
 package com.kos0514.oop_in_java_learn.io;
 
+import com.kos0514.oop_in_java_learn.enums.RockPaperScissors;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -10,9 +11,9 @@ import java.util.Random;
 @Component
 public class RandomComputerChoiceProvider implements ComputerChoiceProvider {
     private final Random random = new Random();
-    
+
     @Override
-    public int chooseHand() {
-        return random.nextInt(3) + 1;
+    public RockPaperScissors chooseHand() {
+        return RockPaperScissors.fromValue(random.nextInt(3) + 1);
     }
 }

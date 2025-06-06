@@ -1,5 +1,6 @@
 package com.kos0514.oop_in_java_learn.service.game;
 
+import com.kos0514.oop_in_java_learn.enums.RockPaperScissors;
 import com.kos0514.oop_in_java_learn.io.ComputerChoiceProvider;
 import com.kos0514.oop_in_java_learn.io.UserInputProvider;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.IntFunction;
 
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.PAPER;
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.ROCK;
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.SCISSORS;
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
 import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
@@ -125,22 +129,21 @@ public class RockPaperScissorsGame {
         info("2: チョキ");
         info("3: パー");
 
-        var playerChoice = getPlayerChoice(inputProvider);
+        var playerHand = getPlayerChoice(inputProvider);
 
-        // コンピュータの手を選択 (1: グー, 2: チョキ, 3: パー)
-        var computerChoice = computerChoiceProvider.chooseHand();
+        // コンピュータの手を選択
+        var computerHand = computerChoiceProvider.chooseHand();
 
-        var hands = new String[]{"", "グー", "チョキ", "パー"};
-        info("あなた: {}", hands[playerChoice]);
-        info("相手: {}", hands[computerChoice]);
+        info("あなた: {}", playerHand.getJapaneseName());
+        info("相手: {}", computerHand.getJapaneseName());
 
         // 勝敗判定
-        if (playerChoice == computerChoice) {
+        if (playerHand == computerHand) {
             info("あいこです。もう一度！");
             return playOneRound(inputProvider); // 再帰的に再プレイ
-        } else return (playerChoice == 1 && computerChoice == 2) ||
-                (playerChoice == 2 && computerChoice == 3) ||
-                (playerChoice == 3 && computerChoice == 1); // プレイヤーの勝ち
+        } else return (playerHand == ROCK && computerHand == SCISSORS) ||
+                (playerHand == PAPER && computerHand == ROCK) ||
+                (playerHand == SCISSORS && computerHand == PAPER); // プレイヤーの勝ち
     }
 
     /**
@@ -148,20 +151,20 @@ public class RockPaperScissorsGame {
      * 有効な選択（1-3）が入力されるまで繰り返し尋ねます。
      *
      * @param inputProvider 入力を受け付けるUserInputProviderオブジェクト
-     * @return プレイヤーの選択（1: グー, 2: チョキ, 3: パー）
+     * @return プレイヤーの選択（ROCK, PAPER, SCISSORS）
      */
-    private int getPlayerChoice(UserInputProvider inputProvider) {
-        var playerChoice = 0;
-        while (playerChoice < 1 || playerChoice > 3) {
+    private RockPaperScissors getPlayerChoice(UserInputProvider inputProvider) {
+        while (true) {
             try {
-                playerChoice = Integer.parseInt(inputProvider.readLine());
-                if (playerChoice < 1 || playerChoice > 3) {
+                var input = Integer.parseInt(inputProvider.readLine());
+                if (input >= 1 && input <= 3) {
+                    return RockPaperScissors.fromValue(input);
+                } else {
                     warn("1から3の数字を入力してください。");
                 }
             } catch (NumberFormatException e) {
                 warnInputNumber();
             }
         }
-        return playerChoice;
     }
 }

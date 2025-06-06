@@ -18,8 +18,10 @@ import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.PAPER;
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.ROCK;
+import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.SCISSORS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +32,17 @@ class RockPaperScissorsGameTest {
 
     @InjectMocks
     private RockPaperScissorsGame rockPaperScissorsGame;
+
+    /**
+     * 型安全なIntFunction<RaceRarity>モックを作成するヘルパーメソッド
+     *
+     * @param winCount 勝利回数
+     * @param rarity   対応するレア度
+     * @return 設定済みのモック
+     */
+    private IntFunction<RaceRarity> createRaceRarityConverter(int winCount, RaceRarity rarity) {
+        return i -> i == winCount ? rarity : null;
+    }
 
     @Nested
     @DisplayName("playGameAndConvertResult メソッドのテスト")
@@ -44,13 +57,11 @@ class RockPaperScissorsGameTest {
                     .addInput("1")  // 1: グー選択
                     .addInput("2"); // 2: 終了
 
-            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
-            when(computerChoiceProvider.chooseHand()).thenReturn(2);
+            // コンピュータの手を設定（プレイヤーがグー(ROCK)を出すとき、コンピュータはハサミ(SCISSORS)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(SCISSORS);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(1)).thenReturn(UNIQUE);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(1, UNIQUE);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -73,13 +84,11 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "1", "1", "2"); // 1: グー選択, 1: 続行, 1: グー選択, 2: 終了
 
-            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
-            when(computerChoiceProvider.chooseHand()).thenReturn(2, 2);
+            // コンピュータの手を設定（プレイヤーがグー(ROCK)を出すとき、コンピュータはハサミ(SCISSORS)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(SCISSORS, SCISSORS);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(2)).thenReturn(LEGENDARY);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(2, LEGENDARY);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -102,13 +111,11 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "1", "1", "1", "1"); // 1: グー選択, 1: 続行, 1: グー選択, 1: 続行, 1: グー選択
 
-            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
-            when(computerChoiceProvider.chooseHand()).thenReturn(2, 2, 2);
+            // コンピュータの手を設定（プレイヤーがグー(ROCK)を出すとき、コンピュータはハサミ(SCISSORS)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(SCISSORS, SCISSORS, SCISSORS);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(3)).thenReturn(SECRET);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(3, SECRET);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -131,13 +138,11 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInput("2"); // 2: チョキ選択
 
-            // コンピュータの手を設定（プレイヤーがチョキ(2)を出すとき、コンピュータはグー(1)を出して勝つ）
-            when(computerChoiceProvider.chooseHand()).thenReturn(1);
+            // コンピュータの手を設定（プレイヤーがチョキ(PAPER)を出すとき、コンピュータはグー(ROCK)を出して勝つ）
+            when(computerChoiceProvider.chooseHand()).thenReturn(ROCK);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(0)).thenReturn(STANDARD);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(0, STANDARD);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -160,13 +165,11 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("5", "abc", "1", "2"); // 5: 無効な選択, abc: 無効な選択, 1: グー選択, 2: 終了
 
-            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
-            when(computerChoiceProvider.chooseHand()).thenReturn(2);
+            // コンピュータの手を設定（プレイヤーがグー(ROCK)を出すとき、コンピュータはハサミ(SCISSORS)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(SCISSORS);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(1)).thenReturn(UNIQUE);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(1, UNIQUE);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -190,13 +193,11 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "3", "abc", "1", "1", "2");
 
-            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
-            when(computerChoiceProvider.chooseHand()).thenReturn(2, 2);
+            // コンピュータの手を設定（プレイヤーがグー(ROCK)を出すとき、コンピュータはハサミ(SCISSORS)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(SCISSORS, SCISSORS);
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(2)).thenReturn(LEGENDARY);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(2, LEGENDARY);
 
             // Act
             var result = rockPaperScissorsGame.playGameAndConvertResult(
@@ -222,7 +223,7 @@ class RockPaperScissorsGameTest {
             // Arrange
             // TestComputerChoiceProviderを直接使用
             var testProvider = new TestComputerChoiceProvider()
-                    .addChoices(1, 2); // 最初はグー(1)でプレイヤーとあいこ、次はチョキ(2)でプレイヤーの勝ち
+                    .addChoices(ROCK, SCISSORS); // 最初はグー(ROCK)でプレイヤーとあいこ、次はハサミ(SCISSORS)でプレイヤーの勝ち
 
             var gameWithProvider = new RockPaperScissorsGame(testProvider);
 
@@ -230,10 +231,8 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "1", "2"); // 1: グー選択, 1: グー選択, 2: 終了
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(1)).thenReturn(UNIQUE);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(1, UNIQUE);
 
             // Act
             var result = gameWithProvider.playGameAndConvertResult(
@@ -254,7 +253,7 @@ class RockPaperScissorsGameTest {
             // Arrange
             // TestComputerChoiceProviderを直接使用
             var testProvider = new TestComputerChoiceProvider()
-                    .addChoices(1, 2, 3, 2); // グー(1)→あいこ, チョキ(2)→あいこ, パー(3)→あいこ, チョキ(2)→プレイヤーの勝ち
+                    .addChoices(ROCK, SCISSORS, PAPER, SCISSORS); // グー(ROCK)→あいこ, チョキ(SCISSORS)→あいこ, パー(PAPER)→あいこ, チョキ(SCISSORS)→プレイヤーの勝ち
 
             var gameWithProvider = new RockPaperScissorsGame(testProvider);
 
@@ -262,10 +261,8 @@ class RockPaperScissorsGameTest {
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "2", "3", "1", "2"); // グー, チョキ, パー, グー, 終了
 
-            // 型安全なモックの作成
-            @SuppressWarnings("unchecked")
-            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
-            when(mockConverter.apply(1)).thenReturn(UNIQUE);
+            // 型安全なコンバーターの作成
+            var mockConverter = createRaceRarityConverter(1, UNIQUE);
 
             // Act
             var result = gameWithProvider.playGameAndConvertResult(
