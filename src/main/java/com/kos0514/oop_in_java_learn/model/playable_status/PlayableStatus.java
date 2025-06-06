@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn.model.playable_status;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
  * プレイヤーステータスの値オブジェクトの基底クラス
  */
 @Getter
+@EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 abstract class PlayableStatus {
     /**

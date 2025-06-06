@@ -4,15 +4,18 @@ import com.kos0514.oop_in_java_learn.entity.generated.RaceStatusModifier;
 import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
+import com.kos0514.oop_in_java_learn.util.RandomGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Random;
 
 /**
  * PlayableStatusesの生成を担当するFactoryクラス
  */
 @Component
+@RequiredArgsConstructor
 public class PlayableStatusesFactory {
+
+    final RandomGenerator randomGenerator;
 
     /**
      * 年齢、SoulId、および種族修正値に基づいてステータスを生成します。
@@ -76,19 +79,19 @@ public class PlayableStatusesFactory {
         }
 
         // SoulIdからランダム要素を生成
-        var random = new Random(soulId.getId().getLeastSignificantBits());
+        randomGenerator.setSeed(soulId.getId().getLeastSignificantBits());
 
         // ±2の範囲でランダムに変動させ、かつ最小値を確保（1未満にならないようにする）
         // HP/MPも若干のランダム要素を持たせる
         return PlayableStatuses.of(
-                Math.max(1, baseStrength + random.nextInt(5) - 2),
-                Math.max(1, baseVitality + random.nextInt(5) - 2),
-                Math.max(1, baseIntelligence + random.nextInt(5) - 2),
-                Math.max(1, baseAgility + random.nextInt(5) - 2),
-                Math.max(1, baseDexterity + random.nextInt(5) - 2),
-                Math.max(1, baseLuck + random.nextInt(5) - 2),
-                baseHealthPoints + (random.nextInt(21) - 10), // ±10
-                baseMagicPoints + (random.nextInt(11) - 5)   // ±5
+                Math.max(1, baseStrength + randomGenerator.nextInt(5) - 2),
+                Math.max(1, baseVitality + randomGenerator.nextInt(5) - 2),
+                Math.max(1, baseIntelligence + randomGenerator.nextInt(5) - 2),
+                Math.max(1, baseAgility + randomGenerator.nextInt(5) - 2),
+                Math.max(1, baseDexterity + randomGenerator.nextInt(5) - 2),
+                Math.max(1, baseLuck + randomGenerator.nextInt(5) - 2),
+                baseHealthPoints + (randomGenerator.nextInt(21) - 10), // ±10
+                baseMagicPoints + (randomGenerator.nextInt(11) - 5)   // ±5
         );
     }
 }
