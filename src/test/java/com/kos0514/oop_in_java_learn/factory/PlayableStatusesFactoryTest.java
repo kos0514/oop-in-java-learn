@@ -49,9 +49,6 @@ class PlayableStatusesFactoryTest {
             var soulId = SoulId.of(UUID.randomUUID());
             var raceStatusModifier = createRaceStatusModifier(1, 1, 1, 1, 1, 1, 10, 5);
 
-            // ランダム値を固定
-            setupRandomValues(0, 0, 0, 0, 0, 0, 0, 0);
-
             // Act
             var result = playableStatusesFactory.create(age, soulId, raceStatusModifier);
 
@@ -76,9 +73,6 @@ class PlayableStatusesFactoryTest {
             // Arrange
             var age = Age.of(25);
             var soulId = SoulId.of(UUID.randomUUID());
-
-            // ランダム値を固定
-            setupRandomValues(0, 0, 0, 0, 0, 0, 0, 0);
 
             // Act
             var result = playableStatusesFactory.create(age, soulId, null);
@@ -106,9 +100,6 @@ class PlayableStatusesFactoryTest {
             var soulId = SoulId.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
             var raceStatusModifier = createRaceStatusModifier(1, 1, 1, 1, 1, 1, 10, 5);
 
-            // ランダム値を固定 - 一度だけ設定すれば両方の呼び出しに適用される
-            setupRandomValues(0, 0, 0, 0, 0, 0, 0, 0);
-
             // Act
             var result1 = playableStatusesFactory.create(age, soulId, raceStatusModifier);
 
@@ -129,9 +120,6 @@ class PlayableStatusesFactoryTest {
             var age = Age.of(ageValue);
             var soulId = SoulId.of(UUID.fromString("00000000-0000-0000-0000-000000000001"));
             var raceStatusModifier = createRaceStatusModifier(0, 0, 0, 0, 0, 0, 0, 0);
-
-            // ランダム値を固定
-            setupRandomValues(0, 0, 0, 0, 0, 0, 0, 0);
 
             // Act
             var result = playableStatusesFactory.create(age, soulId, raceStatusModifier);
@@ -165,9 +153,6 @@ class PlayableStatusesFactoryTest {
             var soulId = SoulId.of(UUID.randomUUID());
             var raceStatusModifier = createRaceStatusModifier(-100, -100, -100, -100, -100, -100, -1000, -1000);
 
-            // ランダム値を固定
-            setupRandomValues(0, 0, 0, 0, 0, 0, 0, 0);
-
             // Act
             var result = playableStatusesFactory.create(age, soulId, raceStatusModifier);
 
@@ -186,13 +171,6 @@ class PlayableStatusesFactoryTest {
         }
     }
 
-    private void setupRandomValues(int str, int vit, int intel, int agi, int dex, int luck, int hp, int mp) {
-        // 各ステータスのランダム値を設定
-        // 常に同じ値を返すように設定（何度呼ばれても同じ値を返す）
-        when(mockRandomGenerator.nextInt(5)).thenReturn(str);
-        when(mockRandomGenerator.nextInt(21)).thenReturn(hp);
-        when(mockRandomGenerator.nextInt(11)).thenReturn(mp);
-    }
 
     private RaceStatusModifier createRaceStatusModifier(
             int strengthMod, int vitalityMod, int intelligenceMod, int agilityMod,
