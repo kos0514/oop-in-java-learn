@@ -180,12 +180,42 @@ class RockPaperScissorsGameTest {
             // Assert
             assertThat(result).isEqualTo(UNIQUE);
         }
+
+        @Test
+        @DisplayName("異常系: askToContinueで無効な入力の後に有効な入力がされる場合")
+        void askToContinue_invalidThenValidInput_eventuallySucceeds() {
+            // Arrange
+            // プレイヤーの入力をシミュレート
+            // 1: グー選択→勝利→無効な入力(3)→無効な入力(abc)→続行(1)→グー選択→勝利→終了(2)
+            var inputProvider = new TestInputProvider()
+                    .addInputs("1", "3", "abc", "1", "1", "2");
+
+            // コンピュータの手を設定（プレイヤーがグー(1)を出すとき、コンピュータはチョキ(2)を出して負ける）
+            when(computerChoiceProvider.chooseHand()).thenReturn(2, 2);
+
+            // 型安全なモックの作成
+            @SuppressWarnings("unchecked")
+            IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
+            when(mockConverter.apply(2)).thenReturn(LEGENDARY);
+
+            // Act
+            var result = rockPaperScissorsGame.playGameAndConvertResult(
+                    inputProvider,
+                    3,
+                    "テストゲーム",
+                    "テスト説明",
+                    mockConverter
+            );
+
+            // Assert
+            assertThat(result).isEqualTo(LEGENDARY);
+        }
     }
-    
+
     @Nested
     @DisplayName("あいこのテスト")
     class TieTests {
-        
+
         @Test
         @DisplayName("あいこの後に勝利するケース")
         void tieFollowedByWin_returnsConvertedResult() {
@@ -193,18 +223,18 @@ class RockPaperScissorsGameTest {
             // TestComputerChoiceProviderを直接使用
             var testProvider = new TestComputerChoiceProvider()
                     .addChoices(1, 2); // 最初はグー(1)でプレイヤーとあいこ、次はチョキ(2)でプレイヤーの勝ち
-                    
+
             var gameWithProvider = new RockPaperScissorsGame(testProvider);
-            
+
             // プレイヤーの入力をシミュレート（グー選択→あいこ→グー選択→勝利→終了）
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "1", "2"); // 1: グー選択, 1: グー選択, 2: 終了
-            
+
             // 型安全なモックの作成
             @SuppressWarnings("unchecked")
             IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
             when(mockConverter.apply(1)).thenReturn(UNIQUE);
-            
+
             // Act
             var result = gameWithProvider.playGameAndConvertResult(
                     inputProvider,
@@ -213,11 +243,11 @@ class RockPaperScissorsGameTest {
                     "あいこの後に勝利するケース",
                     mockConverter
             );
-            
+
             // Assert
             assertThat(result).isEqualTo(UNIQUE);
         }
-        
+
         @Test
         @DisplayName("複数回のあいこの後に勝利するケース")
         void multipleTiesFollowedByWin_returnsConvertedResult() {
@@ -225,18 +255,18 @@ class RockPaperScissorsGameTest {
             // TestComputerChoiceProviderを直接使用
             var testProvider = new TestComputerChoiceProvider()
                     .addChoices(1, 2, 3, 2); // グー(1)→あいこ, チョキ(2)→あいこ, パー(3)→あいこ, チョキ(2)→プレイヤーの勝ち
-                    
+
             var gameWithProvider = new RockPaperScissorsGame(testProvider);
-            
+
             // プレイヤーの入力をシミュレート（グー→あいこ→チョキ→あいこ→パー→あいこ→グー→勝利→終了）
             var inputProvider = new TestInputProvider()
                     .addInputs("1", "2", "3", "1", "2"); // グー, チョキ, パー, グー, 終了
-                    
+
             // 型安全なモックの作成
             @SuppressWarnings("unchecked")
             IntFunction<RaceRarity> mockConverter = (IntFunction<RaceRarity>) mock(IntFunction.class);
             when(mockConverter.apply(1)).thenReturn(UNIQUE);
-            
+
             // Act
             var result = gameWithProvider.playGameAndConvertResult(
                     inputProvider,
@@ -245,7 +275,7 @@ class RockPaperScissorsGameTest {
                     "複数回のあいこの後に勝利するケース",
                     mockConverter
             );
-            
+
             // Assert
             assertThat(result).isEqualTo(UNIQUE);
         }
