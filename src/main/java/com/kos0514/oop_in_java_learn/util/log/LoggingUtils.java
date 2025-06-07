@@ -1,4 +1,4 @@
-package com.kos0514.oop_in_java_learn.util;
+package com.kos0514.oop_in_java_learn.util.log;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

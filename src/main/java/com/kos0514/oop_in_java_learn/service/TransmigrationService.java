@@ -11,9 +11,9 @@ import com.kos0514.oop_in_java_learn.service.world.SelectWorldService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warn;
 
 /**
  * 異世界転生プロセスを管理するサービスクラス。

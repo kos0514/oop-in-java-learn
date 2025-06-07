@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.printSeparator;
 
 /**
  * 転生者の基礎ステータスを表す値オブジェクト。

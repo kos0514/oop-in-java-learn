@@ -11,7 +11,7 @@ import com.kos0514.oop_in_java_learn.model.value.SoulName;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.service.race.SelectRaceService;
 import com.kos0514.oop_in_java_learn.service.world.SelectWorldService;
-import com.kos0514.oop_in_java_learn.util.LoggingUtils;
+import com.kos0514.oop_in_java_learn.util.log.LoggingUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

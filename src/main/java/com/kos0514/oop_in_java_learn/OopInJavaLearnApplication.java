@@ -1,15 +1,15 @@
 package com.kos0514.oop_in_java_learn;
 
 import com.kos0514.oop_in_java_learn.service.TransmigrationService;
-import com.kos0514.oop_in_java_learn.util.ExitHandler;
+import com.kos0514.oop_in_java_learn.util.system.ExitHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.startPrintSeparator;
 
 /**
  * 異世界転生サービスのメインアプリケーションクラス。

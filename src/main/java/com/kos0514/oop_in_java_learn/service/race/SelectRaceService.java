@@ -15,12 +15,12 @@ import static com.kos0514.oop_in_java_learn.enums.RaceRarity.LEGENDARY;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.SECRET;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.STANDARD;
 import static com.kos0514.oop_in_java_learn.enums.RaceRarity.UNIQUE;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warnInputNumber;
 
 /**
  * 種族選択とじゃんけんゲームを管理するサービスクラス。

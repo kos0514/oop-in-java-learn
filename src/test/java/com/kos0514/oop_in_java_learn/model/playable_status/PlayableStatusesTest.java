@@ -1,13 +1,13 @@
 package com.kos0514.oop_in_java_learn.model.playable_status;
 
-import com.kos0514.oop_in_java_learn.util.LoggingUtils;
+import com.kos0514.oop_in_java_learn.util.log.LoggingUtils;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mockStatic;
@@ -90,7 +90,7 @@ class PlayableStatusesTest {
             var statuses = PlayableStatuses.of(10, 8, 12, 9, 11, 7, 100, 50);
 
             // Act & Assert
-            try (MockedStatic<com.kos0514.oop_in_java_learn.util.LoggingUtils> mockedLoggingUtils = mockStatic(com.kos0514.oop_in_java_learn.util.LoggingUtils.class)) {
+            try (MockedStatic<LoggingUtils> mockedLoggingUtils = mockStatic(LoggingUtils.class)) {
                 statuses.showStatus();
 
                 // Verify printSeparator was called twice

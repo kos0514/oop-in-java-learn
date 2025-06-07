@@ -3,7 +3,7 @@ package com.kos0514.oop_in_java_learn.factory;
 import com.kos0514.oop_in_java_learn.entity.generated.RaceStatusModifier;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
-import com.kos0514.oop_in_java_learn.util.RandomGenerator;
+import com.kos0514.oop_in_java_learn.util.random_generator.RandomGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

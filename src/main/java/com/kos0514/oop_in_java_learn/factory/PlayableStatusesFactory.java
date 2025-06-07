@@ -4,7 +4,7 @@ import com.kos0514.oop_in_java_learn.entity.generated.RaceStatusModifier;
 import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.Age;
 import com.kos0514.oop_in_java_learn.model.value.SoulId;
-import com.kos0514.oop_in_java_learn.util.RandomGenerator;
+import com.kos0514.oop_in_java_learn.util.random_generator.RandomGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

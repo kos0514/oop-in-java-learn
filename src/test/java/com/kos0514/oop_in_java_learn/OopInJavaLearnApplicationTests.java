@@ -1,7 +1,7 @@
 package com.kos0514.oop_in_java_learn;
 
 import com.kos0514.oop_in_java_learn.service.TransmigrationService;
-import com.kos0514.oop_in_java_learn.util.ExitHandler;
+import com.kos0514.oop_in_java_learn.util.system.ExitHandler;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

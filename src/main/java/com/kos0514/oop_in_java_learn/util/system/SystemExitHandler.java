@@ -1,4 +1,4 @@
-package com.kos0514.oop_in_java_learn.util;
+package com.kos0514.oop_in_java_learn.util.system;
 
 import org.springframework.stereotype.Component;
 

@@ -6,11 +6,11 @@ import com.kos0514.oop_in_java_learn.repository.WorldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.endPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.startPrintSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.endPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.startPrintSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warnInputNumber;
 
 /**
  * 転生先の世界選択を管理するサービスクラス。

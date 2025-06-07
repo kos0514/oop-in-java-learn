@@ -11,10 +11,10 @@ import java.util.function.IntFunction;
 import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.PAPER;
 import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.ROCK;
 import static com.kos0514.oop_in_java_learn.enums.RockPaperScissors.SCISSORS;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.info;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.printSeparator;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warn;
-import static com.kos0514.oop_in_java_learn.util.LoggingUtils.warnInputNumber;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.info;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.printSeparator;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warn;
+import static com.kos0514.oop_in_java_learn.util.log.LoggingUtils.warnInputNumber;
 
 /**
  * じゃんけんゲームを実装する汎用的なコンポーネント。
