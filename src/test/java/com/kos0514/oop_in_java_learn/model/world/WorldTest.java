@@ -1,16 +1,20 @@
 package com.kos0514.oop_in_java_learn.model.world;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("World クラスのテスト")
 class WorldTest {
 
     @Nested
+    @DisplayName("FantasyWorld クラスのテスト")
     class FantasyWorldTest {
 
         @Test
+        @DisplayName("getName メソッドが正しい名前を返すこと")
         void getName_returnsCorrectName() {
             // Arrange
             var world = new FantasyWorld();
@@ -23,6 +27,7 @@ class WorldTest {
         }
 
         @Test
+        @DisplayName("getDescription メソッドが正しい説明を返すこと")
         void getDescription_returnsCorrectDescription() {
             // Arrange
             var world = new FantasyWorld();
@@ -38,9 +43,11 @@ class WorldTest {
     }
 
     @Nested
+    @DisplayName("MagicTechWorld クラスのテスト")
     class MagicTechWorldTest {
 
         @Test
+        @DisplayName("getName メソッドが正しい名前を返すこと")
         void getName_returnsCorrectName() {
             // Arrange
             var world = new MagicTechWorld();
@@ -53,6 +60,7 @@ class WorldTest {
         }
 
         @Test
+        @DisplayName("getDescription メソッドが正しい説明を返すこと")
         void getDescription_returnsCorrectDescription() {
             // Arrange
             var world = new MagicTechWorld();
@@ -66,9 +74,11 @@ class WorldTest {
     }
 
     @Nested
+    @DisplayName("CultivationWorld クラスのテスト")
     class CultivationWorldTest {
 
         @Test
+        @DisplayName("getName メソッドが正しい名前を返すこと")
         void getName_returnsCorrectName() {
             // Arrange
             var world = new CultivationWorld();
@@ -81,6 +91,7 @@ class WorldTest {
         }
 
         @Test
+        @DisplayName("getDescription メソッドが正しい説明を返すこと")
         void getDescription_returnsCorrectDescription() {
             // Arrange
             var world = new CultivationWorld();
@@ -94,9 +105,11 @@ class WorldTest {
     }
 
     @Nested
+    @DisplayName("FullDiveGameWorld クラスのテスト")
     class FullDiveGameWorldTest {
 
         @Test
+        @DisplayName("getName メソッドが正しい名前を返すこと")
         void getName_returnsCorrectName() {
             // Arrange
             var world = new FullDiveGameWorld();
@@ -109,6 +122,7 @@ class WorldTest {
         }
 
         @Test
+        @DisplayName("getDescription メソッドが正しい説明を返すこと")
         void getDescription_returnsCorrectDescription() {
             // Arrange
             var world = new FullDiveGameWorld();

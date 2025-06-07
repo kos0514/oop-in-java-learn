@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@link SystemExitHandler}のテストクラス
  */
 @ExtendWith(MockitoExtension.class)
+@DisplayName("SystemExitHandler クラスのテスト")
 class SystemExitHandlerTest {
 
     /**

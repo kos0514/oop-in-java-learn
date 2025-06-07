@@ -2,6 +2,7 @@ package com.kos0514.oop_in_java_learn.io;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("SystemInputProvider クラスのテスト")
 class SystemInputProviderTest {
 
     // Store the original System.in to restore it after tests
@@ -26,9 +28,11 @@ class SystemInputProviderTest {
     }
 
     @Nested
+    @DisplayName("readLine メソッドのテスト")
     class ReadLine {
 
         @Test
+        @DisplayName("System.in からの入力を返すこと")
         void returnsInputFromSystemIn() {
             // Arrange
             String testInput = "test input";
@@ -46,6 +50,7 @@ class SystemInputProviderTest {
         }
 
         @Test
+        @DisplayName("空の入力を処理できること")
         void handlesEmptyInput() {
             // Arrange
             String testInput = "";
@@ -63,6 +68,7 @@ class SystemInputProviderTest {
         }
 
         @Test
+        @DisplayName("複数行の入力を処理できること")
         void handlesMultipleLines() {
             // Arrange
             String testInput = "line1\nline2\nline3";
@@ -85,16 +91,18 @@ class SystemInputProviderTest {
     }
 
     @Nested
+    @DisplayName("close メソッドのテスト")
     class Close {
 
         @Test
+        @DisplayName("Scanner を正しく閉じること")
         void closesScanner() {
             // This test uses a mock Scanner to verify that close() is called
-            
+
             // Create a custom SystemInputProvider with a mock Scanner
             class TestableSystemInputProvider extends SystemInputProvider {
                 private final Scanner mockScanner;
-                
+
                 public TestableSystemInputProvider(Scanner mockScanner) {
                     // Call the parent constructor to initialize fields
                     super();
@@ -109,14 +117,14 @@ class SystemInputProviderTest {
                     this.mockScanner = mockScanner;
                 }
             }
-            
+
             // Arrange
             var mockScanner = mock(Scanner.class);
             var provider = new TestableSystemInputProvider(mockScanner);
-            
+
             // Act
             provider.close();
-            
+
             // Assert
             verify(mockScanner).close();
         }
