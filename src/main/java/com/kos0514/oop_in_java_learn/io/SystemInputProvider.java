@@ -14,7 +14,12 @@ public class SystemInputProvider implements UserInputProvider {
 
     @Override
     public String readLine() {
-        return scanner.nextLine();
+        // 次の行があるかどうか確認してから読み込む
+        if (scanner.hasNextLine()) {
+            return scanner.nextLine();
+        }
+        // 入力が空の場合は空文字列を返す
+        return "";
     }
 
     @Override
