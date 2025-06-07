@@ -1,6 +1,7 @@
-package com.kos0514.oop_in_java_learn.io;
+package com.kos0514.oop_in_java_learn.io.test;
 
 import com.kos0514.oop_in_java_learn.enums.RockPaperScissors;
+import com.kos0514.oop_in_java_learn.io.ComputerChoiceProvider;
 
 import java.util.Arrays;
 import java.util.LinkedList;

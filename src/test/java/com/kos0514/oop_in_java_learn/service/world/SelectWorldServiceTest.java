@@ -1,6 +1,6 @@
 package com.kos0514.oop_in_java_learn.service.world;
 
-import com.kos0514.oop_in_java_learn.io.TestInputProvider;
+import com.kos0514.oop_in_java_learn.io.test.TestInputProvider;
 import com.kos0514.oop_in_java_learn.model.world.World;
 import com.kos0514.oop_in_java_learn.repository.WorldRepository;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,8 +2,8 @@ package com.kos0514.oop_in_java_learn.service.race;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.enums.RaceRarity;
-import com.kos0514.oop_in_java_learn.io.TestInputProvider;
 import com.kos0514.oop_in_java_learn.io.UserInputProvider;
+import com.kos0514.oop_in_java_learn.io.test.TestInputProvider;
 import com.kos0514.oop_in_java_learn.mapper.RaceMapper;
 import com.kos0514.oop_in_java_learn.service.game.RockPaperScissorsGame;
 import org.junit.jupiter.api.BeforeEach;

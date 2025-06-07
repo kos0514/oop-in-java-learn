@@ -2,8 +2,8 @@ package com.kos0514.oop_in_java_learn.service.game;
 
 import com.kos0514.oop_in_java_learn.enums.RaceRarity;
 import com.kos0514.oop_in_java_learn.io.ComputerChoiceProvider;
-import com.kos0514.oop_in_java_learn.io.TestComputerChoiceProvider;
-import com.kos0514.oop_in_java_learn.io.TestInputProvider;
+import com.kos0514.oop_in_java_learn.io.test.TestComputerChoiceProvider;
+import com.kos0514.oop_in_java_learn.io.test.TestInputProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

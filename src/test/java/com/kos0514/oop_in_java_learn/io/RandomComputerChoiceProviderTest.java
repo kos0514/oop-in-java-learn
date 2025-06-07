@@ -1,6 +1,7 @@
 package com.kos0514.oop_in_java_learn.io;
 
 import com.kos0514.oop_in_java_learn.enums.RockPaperScissors;
+import com.kos0514.oop_in_java_learn.io.test.TestComputerChoiceProvider;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

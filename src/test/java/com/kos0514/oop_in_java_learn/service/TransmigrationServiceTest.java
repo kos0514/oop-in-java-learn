@@ -2,8 +2,8 @@ package com.kos0514.oop_in_java_learn.service;
 
 import com.kos0514.oop_in_java_learn.entity.generated.Race;
 import com.kos0514.oop_in_java_learn.factory.TransmigratorFactory;
-import com.kos0514.oop_in_java_learn.io.TestInputProvider;
 import com.kos0514.oop_in_java_learn.io.UserInputProvider;
+import com.kos0514.oop_in_java_learn.io.test.TestInputProvider;
 import com.kos0514.oop_in_java_learn.model.Transmigrator;
 import com.kos0514.oop_in_java_learn.model.playable_status.PlayableStatuses;
 import com.kos0514.oop_in_java_learn.model.value.Age;
