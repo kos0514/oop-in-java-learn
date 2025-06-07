@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,8 +33,8 @@ class RaceRarityTest {
 
             // Assert
             assertThat(values)
-                .extracting(Enum::name)
-                .containsExactly("STANDARD", "UNIQUE", "LEGENDARY", "SECRET");
+                    .extracting(Enum::name)
+                    .containsExactly("STANDARD", "UNIQUE", "LEGENDARY", "SECRET");
         }
     }
 
@@ -46,10 +45,10 @@ class RaceRarityTest {
         @ParameterizedTest
         @DisplayName("各レア度に対して正しい必要勝利回数を持つこと")
         @CsvSource({
-            "STANDARD, 0",
-            "UNIQUE, 1",
-            "LEGENDARY, 2",
-            "SECRET, 3"
+                "STANDARD, 0",
+                "UNIQUE, 1",
+                "LEGENDARY, 2",
+                "SECRET, 3"
         })
         void hasCorrectRequiredWins(RaceRarity rarity, int expectedWins) {
             // Act
@@ -93,10 +92,10 @@ class RaceRarityTest {
         @ParameterizedTest
         @DisplayName("各レア度に対して正しい日本語の説明を持つこと")
         @CsvSource({
-            "STANDARD, 一般",
-            "UNIQUE, レア",
-            "LEGENDARY, スーパーレア",
-            "SECRET, ウルトラレア"
+                "STANDARD, 一般",
+                "UNIQUE, レア",
+                "LEGENDARY, スーパーレア",
+                "SECRET, ウルトラレア"
         })
         void hasCorrectJapaneseDescription(RaceRarity rarity, String expectedDescription) {
             // Act
@@ -111,9 +110,9 @@ class RaceRarityTest {
         void allValuesHaveNonEmptyDescription() {
             // Act & Assert
             assertThat(RaceRarity.values())
-                .extracting(RaceRarity::getJapaneseDescription)
-                .doesNotContainNull()
-                .allSatisfy(description -> assertThat(description).isNotBlank());
+                    .extracting(RaceRarity::getJapaneseDescription)
+                    .doesNotContainNull()
+                    .allSatisfy(description -> assertThat(description).isNotBlank());
         }
     }
 }

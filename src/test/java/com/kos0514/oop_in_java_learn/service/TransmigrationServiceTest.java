@@ -76,7 +76,7 @@ class TransmigrationServiceTest {
 
         @Test
         @DisplayName("正常系: 転生プロセスが正常に完了する")
-        void normalCase_completesSuccessfully() throws Exception {
+        void normalCase_completesSuccessfully() {
             // Arrange
             var spyService = spy(transmigrationService);
             doNothing().when(spyService).startTransmigrationProcess(any(UserInputProvider.class));
@@ -156,9 +156,7 @@ class TransmigrationServiceTest {
 
                 // Act & Assert
                 // 例外が伝播することを確認
-                assertThrows(RuntimeException.class, () -> {
-                    transmigrationService.startTransmigrationProcess(inputProvider);
-                });
+                assertThrows(RuntimeException.class, () -> transmigrationService.startTransmigrationProcess(inputProvider));
 
                 // 検証
                 verify(selectWorldService).selectWorld(any(UserInputProvider.class));
@@ -180,9 +178,7 @@ class TransmigrationServiceTest {
                         .thenThrow(new RuntimeException("種族選択エラー"));
 
                 // Act & Assert
-                assertThrows(RuntimeException.class, () -> {
-                    transmigrationService.startTransmigrationProcess(inputProvider);
-                });
+                assertThrows(RuntimeException.class, () -> transmigrationService.startTransmigrationProcess(inputProvider));
 
                 // 検証
                 verify(selectWorldService).selectWorld(any(UserInputProvider.class));
@@ -205,9 +201,7 @@ class TransmigrationServiceTest {
                         .thenThrow(new RuntimeException("転生者作成エラー"));
 
                 // Act & Assert
-                assertThrows(RuntimeException.class, () -> {
-                    transmigrationService.startTransmigrationProcess(inputProvider);
-                });
+                assertThrows(RuntimeException.class, () -> transmigrationService.startTransmigrationProcess(inputProvider));
 
                 // 検証
                 verify(selectWorldService).selectWorld(any(UserInputProvider.class));

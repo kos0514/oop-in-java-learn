@@ -17,35 +17,11 @@ public class TestComputerChoiceProvider implements ComputerChoiceProvider {
     /**
      * テスト用の選択肢を追加します
      *
-     * @param choice 選択肢 (1: グー, 2: チョキ, 3: パー)
-     * @return this (メソッドチェーン用)
-     */
-    public TestComputerChoiceProvider addChoice(int choice) {
-        choices.add(RockPaperScissors.fromValue(choice));
-        return this;
-    }
-
-    /**
-     * テスト用の選択肢を追加します
-     *
      * @param choice 選択肢 (RockPaperScissors)
      * @return this (メソッドチェーン用)
      */
     public TestComputerChoiceProvider addChoice(RockPaperScissors choice) {
         choices.add(choice);
-        return this;
-    }
-
-    /**
-     * 複数の選択肢を一度に追加します
-     *
-     * @param choices 選択肢の配列
-     * @return this (メソッドチェーン用)
-     */
-    public TestComputerChoiceProvider addChoices(int... choices) {
-        for (int choice : choices) {
-            this.choices.add(RockPaperScissors.fromValue(choice));
-        }
         return this;
     }
 

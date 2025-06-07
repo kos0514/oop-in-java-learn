@@ -147,7 +147,7 @@ class LoggingUtilsTest {
             // Assert
             assertThat(listAppender.list).hasSize(2);
 
-            var firstEvent = listAppender.list.get(0);
+            var firstEvent = listAppender.list.getFirst();
             assertThat(firstEvent.getLevel()).isEqualTo(Level.INFO);
             assertThat(firstEvent.getFormattedMessage()).isEmpty();
 
@@ -171,7 +171,7 @@ class LoggingUtilsTest {
             // Assert
             assertThat(listAppender.list).hasSize(2);
 
-            var firstEvent = listAppender.list.get(0);
+            var firstEvent = listAppender.list.getFirst();
             assertThat(firstEvent.getLevel()).isEqualTo(Level.INFO);
             assertThat(firstEvent.getFormattedMessage())
                     .isEqualTo("======================================");

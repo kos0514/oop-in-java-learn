@@ -18,9 +18,9 @@ class PlayableStatusTest {
             super(value, japaneseName);
         }
 
-        public static TestPlayableStatus of(int value) {
+        public static void of(int value) {
             validateValue(value, "テストステータス");
-            return new TestPlayableStatus(value, "テストステータス");
+            new TestPlayableStatus(value, "テストステータス");
         }
     }
 
